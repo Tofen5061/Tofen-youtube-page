@@ -1,0 +1,117 @@
+---
+import Menu from "../../layouts/Menu.astro";
+import Footer from "../../layouts/footer.astro";
+---
+
+<Menu>
+</Menu>
+<main>
+      <div class="content">
+            <img class="img" src="https://i.pinimg.com/564x/f1/c2/ed/f1c2ed1000720bfcaeaa95d8bf917ddb.jpg" alt="Logo">
+            <h1 class="h1Tofen">Tofen</h1>
+            <h2 class="acercaDe_h2">Acerca De Mi</h2>
+            <ul class="info">
+                  <li>Nombre:Kevin Richtofen</li>
+                  <li>Edad:16</li>
+                  <li>Soy De:Nicaragua</li>
+                  <li>Subo contenido de tutoriales relacionados a la programacion y a la tecnologia y de vez en cuando juegos u otros topicos</li>
+            </ul>
+
+
+            <h1 class="redes_sociales_h1">Redes Sociales</h1>
+            <ul class="redes_sociales_ul">
+                  <li><a href="https://www.instagram.com/tofen_kevin/"> <img class="inst_img" src="https://static-00.iconduck.com/assets.00/instagram-icon-2048x2048-uc6feurl.png" alt="instagram"></a></li>
+                  <li><a href="https://www.tiktok.com/@tofenrich"><img class="tik_img" src="https://cliply.co/wp-content/uploads/2021/02/372102780_TIKTOK_ICON_400px.gif" alt="TikTok"></a></li>
+                  <li><a href="https://www.youtube.com/channel/UC0Ilkjabp2FzuvkXwykC06A"><img class="YT_img" src="https://static.vecteezy.com/system/resources/previews/018/930/575/original/youtube-logo-youtube-icon-transparent-free-png.png" alt="YouTube"></a></li>
+
+
+
+            </ul>
+
+      </div>
+
+</main>
+<Footer></Footer>
+
+
+<style>
+
+main{
+      /*hace que todo el contenido este solo en el centro*/ 
+      margin:3% 25%
+}
+
+.content{
+      /*fuente*/
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      /*color del texto */
+      color: #000;
+      /*necesario para que se centre la imagen y el h1 correctamente*/
+      display: grid;
+}
+.h1Tofen{
+      /*tamaño responsive de la fuente*/
+      font-size: clamp(3rem, 6vw, 35rem);
+      /*centra el texto*/
+      text-align: center;
+      /*centra el texto visualmente con la imagen*/
+      margin-left: 5%;
+}
+
+
+.img{
+      /*hace que la imagen sea circular*/
+      border-radius: 100%;
+      /*hace que la imagen se centre*/
+      margin:0% auto;
+      /*tamaño de la imagen*/
+      width: 80%;
+}
+
+.acercaDe_h2{
+      border-left: #000 3px solid;
+      padding-left: 2px;
+      font-size: clamp(1.5rem, 3vw, 5rem);
+
+
+}
+
+.info{
+      border-left: #000 3px solid;
+      margin-top: 0%;
+      font-size: clamp(1rem, 1.5vw, 3rem);
+}
+
+.inst_img{
+      width: 3rem;
+}
+
+.YT_img{
+      width: 5.3rem;
+      margin-left: -20%;
+}
+
+.tik_img{
+      width: 7.5rem;
+}
+
+.redes_sociales_h1{
+
+      margin: 20% auto 0% auto;
+
+      font-size: clamp(2rem, 4vw, 10rem);
+}
+
+
+
+
+.redes_sociales_ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+}
+
+
+</style>

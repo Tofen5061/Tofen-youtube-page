@@ -1,0 +1,52 @@
+---
+import Menu from "../layouts/Menu.astro";
+import Footer from "../layouts/footer.astro";
+import Card from "../components/article_card.astro"
+---
+
+<Menu></Menu>
+
+<main>
+<div class="articles">
+<Card id="card_1" title="Descarga Youtube Music Premiun Gratis 2024" img="ytmusic.jpg" alt_img="" url="articles/yt_music"/>
+
+<Card title="falopa"></Card>
+
+<Card title="falopa"></Card>
+
+<Card title="falopa"></Card>
+
+<Card title="falopa"></Card>
+
+<Card title="falopa"></Card>
+
+<Card title="falopa"></Card>
+
+<Card title="falopa"></Card>
+
+
+</div>
+</main>
+
+
+<Footer></Footer>
+
+<style>
+
+.articles{
+    display: grid;
+    grid-template-columns: repeat(auto-fill,
+        minmax(280px,1fr)
+    );
+    gap: 16px;
+    padding: 20px;
+    padding-left: 30px;
+    justify-content: center;
+    align-content: start;
+}
+
+main{
+    background-color: #f0f2f5;
+}
+
+</style>
