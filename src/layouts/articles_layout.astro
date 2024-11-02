@@ -1,9 +1,14 @@
+---
+import Menu from "./Menu.astro"
+---
+
 <main class="articles_layout">
 
+<Menu></Menu>
     <div class="display">
         <section class="main_info"></section>
 
-        <section class="other_info"></section>
+        <section class="other_info"><slot name="social_media_1"></slot> </section>
     </div>
 
 
@@ -17,6 +22,7 @@
     gap: 4vw;
     height: 90vw;
     width: 90vw;
+    margin-top: 20px;
     justify-self: center;
     justify-content: center;
 
@@ -31,13 +37,21 @@ section{
 }
 
 .main_info{
-    width: 810px;
-    margin-right: 10px;
+    width: 790px;
+    padding-top: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 20px;
 }
 
 .other_info{
-    width: 280px;
+    width: 260px;
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 15px;
 }
+
 
 
 

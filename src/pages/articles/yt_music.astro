@@ -4,15 +4,17 @@ import Redes from "../../components/tiktok_card.astro"
 
 ---
 
-<Layout > </Layout>
+<Layout> 
+<div slot="social_media_1" class="social_media_1" >
+    <Redes></Redes>
+</div>
+
+</Layout>
 
 <style>
 
-div{
-    width: 50px;
-    border: 1px solid darkgray;
+.social_media_1{
+    justify-self: center;
 }
-
-
 
 </style>
