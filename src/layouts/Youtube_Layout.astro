@@ -1,18 +1,16 @@
 ---
-import Menu from "./Menu.astro"
+import Layout from "../layouts/Layout.astro"
 ---
-
-<main class="articles_layout">
-
-<Menu></Menu>
-    <div class="display">
-        <section class="main_info"></section>
-
-        <section class="other_info"><slot name="social_media_1"></slot> </section>
-    </div>
-
-
-</main>
+<Layout title="Tofen">
+    <main class="articles_layout">
+        <div class="display">
+            <section class="main_info"></section>
+    
+            <section class="other_info"><slot name="social_media_1"></slot> </section>
+        </div>
+    
+    </main>
+</Layout>
 
 <style>
 
