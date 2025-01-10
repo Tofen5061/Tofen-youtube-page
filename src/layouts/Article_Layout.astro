@@ -6,7 +6,12 @@ import Layout from "../layouts/Layout.astro"
         <div class="display">
             <section class="main_info"></section>
     
-            <section class="other_info"><slot name="social_media_1" class="social_media_1"></slot> </section>
+            <section class="other_info">
+                <slot name="social_media_1" class="social_media_1"></slot>
+                <slot name="social_media_1" class="social_media_1"></slot>
+                <slot name="social_media_1" class="social_media_1"></slot>
+
+            </section>
         </div>
     
     </main>
@@ -37,7 +42,7 @@ section{
 }
 
 .main_info{
-    height: 90%;
+    min-height: 90vh;
     width: 65vw;
     padding-top: 20px;
     padding-left: 15px;
@@ -46,19 +51,33 @@ section{
 }
 
 .other_info{
-    height: 90%;
+    min-height: 90vh;
     width: 20vw;
     padding-top: 15px;
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 15px;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
 }
 
 .social_media_1{
-    width: 80% ;
     justify-self: center;
 
+
+}
+
+
+@media (max-width: 800px){
+    .other_info{
+        width: 60vw;
+        justify-content: start;
+        align-items: center;
+        display: flex;
+    flex-direction: column;
+    gap: 5vh;
+    }
 }
 
 
