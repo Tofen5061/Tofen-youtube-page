@@ -4,7 +4,7 @@
             <ul class="redes_sociales_ul">
                   <li><a href="https://www.instagram.com/tofen_kevin/"> <img class="inst_img" src="https://static-00.iconduck.com/assets.00/instagram-icon-2048x2048-uc6feurl.png" alt="instagram"></a></li>
                   <li><a href="https://www.tiktok.com/@tofenrich"><img class="tik_img" src="https://cdn.pixabay.com/photo/2021/06/15/12/28/tiktok-6338429_1280.png" alt="TikTok"></a></li>
-                  <li><a href="https://www.youtube.com/channel/UC0Ilkjabp2FzuvkXwykC06A"><img class="YT_img" src="https://static.vecteezy.com/system/resources/previews/018/930/575/original/youtube-logo-youtube-icon-transparent-free-png.png" alt="YouTube"></a></li>
+                  <li><a href="https://www.youtube.com/channel/UC0Ilkjabp2FzuvkXwykC06A"><img class="YT_img" src=https://raw.githubusercontent.com/Tofen5061/Tofen-youtube-page/refs/heads/main/public/Youtube_icon.png alt="YouTube"></a></li>
             </ul>
 
             <h2 class="abajo_tofen">Tofen</h2>
@@ -19,7 +19,7 @@
 .pie_de_pagina {
     background-color: rgb(0, 0, 0);
     width: 100%;
-    height: clamp(15vw, 3vw, 13vw);
+    height: clamp(15vh, 25vh, 30vh)
 }
 
 
@@ -27,21 +27,24 @@
       list-style: none;
       display: flex;
       justify-content: center;
+      justify-items: center;
       align-items: center;
       gap: 1vw;
+      height: auto;
+
 }
 
 .inst_img{
-      width: clamp(3vw, 2vw, 3vw);
-}
-
-.YT_img{
-      width: 5vw;
-      margin-left: -20%;
+      height: 7vh;
 }
 
 .tik_img {
-      width: 4vw;
+      height: 10vh;
+
+}
+.YT_img{
+      height: 6vh;
+
 }
 
 .abajo_tofen{
@@ -49,7 +52,28 @@
       text-align: center;
       font-size: 1.4rem;
       font-family: 'Roboto', sans-serif;
-      margin-top: -1%;
+      margin-bottom: 15vh;
+      margin-left:2%;
+}
+
+@media (max-width:800px){
+
+.redes_sociales_ul {
+      gap: 2vw;
+      margin-right: 4%;
+}
+.inst_img{
+      height: 5vh;
+}
+
+.tik_img {
+      height: 8vh;
+
+}
+.YT_img{
+      height: 4vh;
+
+}
 }
 
 
