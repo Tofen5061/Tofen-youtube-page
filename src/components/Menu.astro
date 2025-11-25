@@ -12,8 +12,12 @@
     <div class="menu">
         <img class="tofenImg" src="https://i.pinimg.com/564x/f1/c2/ed/f1c2ed1000720bfcaeaa95d8bf917ddb.jpg" alt="Logo">
         <h2 class="tofen" >Tofen</h2>
-        <a href="/">home</a>
-        <a class="about" href="about">about</a>
+        <div id="home_button_div">
+            <a href="/">home</a>
+        </div>
+        <div id="about_button_div">
+            <a class="about" href="about">about</a>
+        </div>
     </div>
 </main>
 
@@ -30,7 +34,6 @@
 
     .tofen {
         margin-right: auto;
-        margin-left: -0.7em;
     }
 
     .menu {
@@ -39,7 +42,6 @@
         justify-content:right;
         align-items: center;
         /*separacion y tamaño*/
-        gap: clamp(1rem, 2vw, 20rem);
         width: 100%;
         /*colores*/
         background-color: rgb(0, 0, 0) ;
@@ -61,18 +63,23 @@
         text-decoration: none;
         font-size: clamp(1.1rem, 3.5vw, 1.4rem);
         font-weight: 700;
+        padding:6vh 2vh 6vh
+    }
+
+    a:hover {
+        background-color: white;
+        color: black;
+        height:40px;
     }
 
 
     .about {
-        margin-right: 2rem;
+        margin-right: 1vw;
     }
 
     @media screen and (max-width: 700px) {
 
-      .contact{
-        margin-right: 1rem ;
-      }
+     1
 
       .tofenImg {
         width:3rem;
