@@ -1,10 +1,28 @@
 ---
 import Layout from "../layouts/Layout.astro"
+import { setupCarousel } from '../scripts/banner_carousel.js';
+const { banner_img = [], banner_alt } = Astro.props;
 ---
 <Layout title="Tofen">
     <main class="articles_layout">
         <div class="display">
-            <section class="main_info"></section>
+            <section class="main_info">
+
+                    <div id="banner_container" class="banner_info">
+                        {
+                            banner_img && banner_img.length > 0  && banner_img.map((src, index) => (
+                            <img src={src} alt={`${banner_alt} ${index + 1}` }
+                            data-index={index} 
+                            class={index === 0 ? "active" : "inactive"}/>
+                            ))
+                        
+                        } </div>
+                    <slot name="article_title" class="article_title" > </slot>
+                    <slot name="article_description" class="article_description" ></slot>
+                    <slot name="article_download" class="" ></slot>
+                    <slot name="article_bye" ></slot> 
+
+            </section>
     
             <section class="other_info">
                 <slot name="social_media_1" class="social_media_1"></slot>
@@ -17,7 +35,7 @@ import Layout from "../layouts/Layout.astro"
     </main>
 </Layout>
 
-<style>
+<style is:global>
 
 .display{
     display: flex;
@@ -28,17 +46,12 @@ import Layout from "../layouts/Layout.astro"
     margin-top: 20px;
     justify-self: center;
     justify-content: center;
-
-
 }
 
 section{
     background-color: #fffaf7;
     height: 100%;
     border-radius: 8px;
-
-
-
 }
 
 .main_info{
@@ -49,6 +62,35 @@ section{
     padding-right: 15px;
     padding-bottom: 20px;
 }
+
+.banner_info{
+    max-width: 95%;
+    border-radius: 8px;
+    overflow: hidden;
+    object-fit: contain;
+}
+ /* arreglar el tamaño de la imagen del banner */
+.banner_info img{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+.banner_info img.active{
+    width: 100%;
+    opacity: 1;
+}   
+
+#banner_container {
+    position: relative;
+    height: 75vh; 
+    aspect-ratio: 16 / 9;
+    max-width: 95%;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
 
 .other_info{
     min-height: 90vh;
@@ -81,7 +123,9 @@ section{
 
 }
 
-
-
-
 </style>
+
+<script>
+    import { setupCarousel } from '../scripts/banner_carousel.js';
+setupCarousel()
+</script>
