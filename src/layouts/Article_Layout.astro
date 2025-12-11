@@ -1,7 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro"
 import { setupCarousel } from '../scripts/banner_carousel.js';
-const { banner_img = [], banner_alt } = Astro.props;
+import Tiktok from "../components/Tiktok.astro";   
+import Youtube from "../components/Youtube.astro";
+import Instagram from "../components/Instagram.astro";
+import { string, undefined } from "astro:schema";
+const { banner_img = [], banner_alt, header, description, download_link, after_download_content } = Astro.props;
+
 ---
 <Layout title="Tofen">
     <main class="articles_layout">
@@ -17,17 +22,19 @@ const { banner_img = [], banner_alt } = Astro.props;
                             ))
                         
                         } </div>
-                    <slot name="article_title" class="article_title" > </slot>
-                    <slot name="article_description" class="article_description" ></slot>
-                    <slot name="article_download" class="" ></slot>
-                    <slot name="article_bye" ></slot> 
+                    <h1 class="article_title">{header}</h1>
+                    <p class="article description">{description} </p>
+                    <div class="download_button_container"><a href={download_link}><button class="button_download"><span class="button-content">Download</span></button></a></div>
+                    <p class="after_download_content">{after_download_content} </p>
+                    
+
 
             </section>
     
             <section class="other_info">
-                <slot name="social_media_1" class="social_media_1"></slot>
-                <slot name="social_media_1" class="social_media_1"></slot>
-                <slot name="social_media_1" class="social_media_1"></slot>
+                <slot name="social_tiktok" class="social_media_1"> <Tiktok /> </slot>
+                <slot name="social_youtube" class="social_media_1"> <Youtube />   </slot>
+                <slot name="social_instagram" class="social_media_1"> <Instagram />  </slot>
 
             </section>
         </div>
@@ -90,6 +97,80 @@ section{
     border-radius: 8px;
     overflow: hidden;
 }
+
+.article_title{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: clamp(2rem, 3vw, 4rem);
+}
+
+.article.description{
+    font-size: clamp(1rem, 1.5vw, 2rem);
+    margin-bottom: 60px;
+}
+
+
+
+
+
+.download_button_container{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.button_download {
+  position: relative;
+  overflow: hidden;
+  font-weight: bold;
+  height: 3rem;
+  padding: 0 2rem;
+  border-radius: 1.5rem;
+  background: #704a11;
+  background-size: 400%;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.button_download:hover::before {
+  transform: scaleX(1);
+}
+
+.button-content {
+  position: relative;
+  z-index: 1;
+}
+
+.button_download::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  width: 100%;
+  height: inherit;
+  border-radius: inherit;
+  background: linear-gradient(
+    82.3deg,
+    #FFC719,
+    #BF033B
+  );
+  transition: all 0.475s;
+}
+
+.after_download_content{
+    font-size: clamp(1rem, 1.5vw, 2rem);
+    margin-top: 60px;
+}
+
+
+
+
+
+
 
 
 .other_info{
