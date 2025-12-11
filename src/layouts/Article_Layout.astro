@@ -35,7 +35,18 @@ const { banner_img = [], banner_alt, header, description, download_link, after_d
                 <slot name="social_tiktok" class="social_media_1"> <Tiktok /> </slot>
                 <slot name="social_youtube" class="social_media_1"> <Youtube />   </slot>
                 <slot name="social_instagram" class="social_media_1"> <Instagram />  </slot>
-
+                
+                <!-- Ads here -->
+                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- Other info ad 1 -->
+                            <ins class="adsbygoogle"
+                                style="display:block"
+                                data-full-width-responsive="true"
+                                data-ad-client="ca-pub-6818329352848462"
+                                data-ad-slot="9512567430"
+                                data-ad-format="auto">
+                            </ins>
+                            <script is:inline>(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </section>
         </div>
     
@@ -70,17 +81,20 @@ section{
     padding-bottom: 20px;
 }
 
-.banner_info{
+/* arreglar el tamaño de la imagen del banner */
+#banner_container {
+    position: relative;
+    height: auto; 
+    aspect-ratio: 16 / 9;
     max-width: 95%;
     border-radius: 8px;
     overflow: hidden;
-    object-fit: contain;
 }
- /* arreglar el tamaño de la imagen del banner */
+
 .banner_info img{
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: auto;
     opacity: 0;
     transition: opacity 1s ease-in-out;
 }
@@ -89,14 +103,6 @@ section{
     opacity: 1;
 }   
 
-#banner_container {
-    position: relative;
-    height: 75vh; 
-    aspect-ratio: 16 / 9;
-    max-width: 95%;
-    border-radius: 8px;
-    overflow: hidden;
-}
 
 .article_title{
     margin-top: 20px;
@@ -108,10 +114,6 @@ section{
     font-size: clamp(1rem, 1.5vw, 2rem);
     margin-bottom: 60px;
 }
-
-
-
-
 
 .download_button_container{
     margin-top: 20px;
@@ -166,13 +168,6 @@ section{
     margin-top: 60px;
 }
 
-
-
-
-
-
-
-
 .other_info{
     min-height: 90vh;
     width: 20vw;
@@ -183,6 +178,10 @@ section{
     display: flex;
     flex-direction: column;
     gap: 5vh;
+}
+
+.social_media_1{
+    width: 100%;
 }
 
 
@@ -203,6 +202,7 @@ section{
 
 
 }
+
 
 </style>
 
