@@ -4,9 +4,12 @@ import { setupCarousel } from '../scripts/banner_carousel.js';
 import Tiktok from "../components/Tiktok.astro";   
 import Youtube from "../components/Youtube.astro";
 import Instagram from "../components/Instagram.astro";
+import { marked } from 'marked'; 
 import { string, undefined } from "astro:schema";
 const { banner_img = [], banner_alt, header, description, download_link, after_download_content } = Astro.props;
-
+const htmlDescription = marked(description);
+// Convertimos after_download_content también, si lo deseas
+const htmlAfterDownload = marked(after_download_content);
 ---
 <Layout title="Tofen">
     <main class="articles_layout">
@@ -23,9 +26,9 @@ const { banner_img = [], banner_alt, header, description, download_link, after_d
                         
                         } </div>
                     <h1 class="article_title">{header}</h1>
-                    <p class="article description">{description} </p>
+                    <div class="article_description" set:html={htmlDescription} />
                     <div class="download_button_container"><a href={download_link}><button class="button_download"><span class="button-content">Download</span></button></a></div>
-                    <p class="after_download_content">{after_download_content} </p>
+                    <div class="after_download_content" set:html={htmlAfterDownload} />
                     
 
 
@@ -110,10 +113,9 @@ section{
     font-size: clamp(2rem, 3vw, 4rem);
 }
 
-.article.description{
-    font-size: clamp(1rem, 1.5vw, 2rem);
-    margin-bottom: 60px;
-}
+.article_description p,.article_description h1,.article_description h2,.article_description li {
+    font-size: clamp(5vw 15rem 12vw); /* Intenta con un tamaño que sea claramente diferente, como 20px */
+    line-height: 1.6;}
 
 .download_button_container{
     margin-top: 20px;
