@@ -1,54 +1,39 @@
-# Astro Starter Kit: Basics
+# Tofen Content Engine 📺
 
-```sh
-npm create astro@latest -- --template basics
-```
+A high-performance personal brand platform built with **Astro** and **Vanilla JavaScript**. This project serves as a centralized hub for technical tutorials, software documentation, and community engagement.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## 🎯 Strategic Objective
+The goal of this project was to create a lightweight, SEO-friendly alternative to standard link-in-bio tools, integrating monetization (AdSense) and dynamic content rendering.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🛠 Tech Stack
+- **Framework:** Astro 5.0
+- **Content Processing:** [Marked.js](https://marked.js.org/) (Markdown-to-HTML parser)
+- **Monetization:** Google AdSense Integration
+- **Typography:** @fontsource/league-spartan
+- **Scripts:** Modular Vanilla JavaScript
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## ✨ Technical Highlights
 
-## 🚀 Project Structure
+### 1. Dynamic Content Pipeline
+Instead of hardcoding HTML for every article, the system uses a custom `Article_Layout`. It accepts Markdown strings as props and processes them using `marked`, allowing for:
+- Separation of content and presentation.
+- Faster content updates without touching the UI logic.
+- Sanity-checked HTML injection via `set:html`.
 
-Inside of your Astro project, you'll see the following folders and files:
+### 2. Intelligent UI Components
+- **Defensive Carousel Logic:** The `banner_carousel.js` script includes a safety check to prevent execution if less than two images are present, optimizing client-side performance.
+- **Responsive Media Slots:** Uses Astro `<slot />` to allow per-page customization of social media sidebars while maintaining a consistent layout.
+- **Fluid Typography:** Implementation of `clamp()` functions across all headings to ensure a flawless experience from mobile devices to 4K displays.
 
+### 3. Monetization & Analytics
+The architecture is designed with "Revenue-First" principles, featuring:
+- Pre-configured Google AdSense slots within the `other_info` sections.
+- Strategic placement of "Download" call-to-actions (CTA) with CSS-only hover animations to increase click-through rates (CTR).
+
+## 📂 Architecture
 ```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+src/
+├── components/   # Reusable Atomic UI units (Cards, Social, Menu)
+├── layouts/      # Master templates (Global Layout & Article Layout)
+├── pages/        # File-based routing for tutorials and legal info
+└── scripts/      # Standalone business logic (Carousels, Analytics)
