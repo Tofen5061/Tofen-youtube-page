@@ -10,9 +10,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.5.10",
+    "@astrojs/check": "^0.9.8",
     "@fontsource-variable/league-spartan": "^5.1.0",
-    "astro": "^5.1.1",
+    "astro": "^6.0.8",
     "daisyui": "^5.0.43",
     "marked": "^17.0.1",
     "typescript": "^5.4.4"
