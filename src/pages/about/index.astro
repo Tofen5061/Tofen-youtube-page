@@ -1,121 +1,119 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-
-
+import Layout from '../../layouts/Layout.astro';
+import Redes from '../../components/Redes.astro';
+import Icono from '../../components/Icono.astro';
+import { SUSCRIBIRSE } from '../../data/sitio';
 ---
 
-<Layout title="About Tofen">
-      <main>
-            <div class="content">
-                  <img class="img" src="https://i.pinimg.com/564x/f1/c2/ed/f1c2ed1000720bfcaeaa95d8bf917ddb.jpg" alt="Logo">
-                  <h1 class="h1Tofen">Tofen</h1>
+<Layout
+	title="Sobre mí · Tofen"
+	description="Soy Kevin Richtofen (Tofen), de Nicaragua. Hago tutoriales de programación y tecnología en YouTube."
+>
+	<main class="contenedor sobre">
+		<section class="tarjeta perfil">
+			<img src="/marca/tofen-avatar.svg" alt="" class="avatar" width="72" height="72" />
+			<span class="eyebrow">Sobre mí</span>
+			<h1>Kevin Richtofen</h1>
+			<p class="alias">Tofen</p>
 
-                  <div class="info">
-                        <h2 class="acercaDe_h2">Acerca De Mi</h2>
-                        <ul >
-                              <li>Nombre:Kevin Richtofen</li>
-                              <li>Edad:17</li>
-                              <li>Soy De:Nicaragua</li>
-                              <li>Subo contenido de tutoriales relacionados a la programacion y a la tecnologia y de vez en cuando juegos u otros topicos</li>
-                        </ul>
-                  </div>
-      
-      
-                  <h1 class="redes_sociales_h1">Redes Sociales</h1>
-                  <ul class="redes_sociales_ul">
-                         <li><a href="https://www.instagram.com/tofen_kevin/" target="_blank"> <img class="inst_img" src="/instagramColour.png" alt="instagram"></a></li>
-                        <li><a href="https://www.tiktok.com/@tofenrich"><img class="tik_img" src="tik-tok.png" alt="TikTok"></a></li>
-                        <li><a href="https://www.youtube.com/channel/UC0Ilkjabp2FzuvkXwykC06A"><img class="YT_img" src="Youtube_icon.png" alt="YouTube"></a></li>
-      
-      
-      
-                  </ul>
-      
-            </div>
-      
-      </main>
+			<ul class="datos">
+				<li><Icono nombre="mapa" /> Nicaragua</li>
+				<li><Icono nombre="codigo" /> Programación y tecnología</li>
+			</ul>
+
+			<p class="bio">
+				Subo tutoriales relacionados con la programación y la tecnología y, de vez en cuando, juegos u otros
+				temas.
+			</p>
+
+			<a href={SUSCRIBIRSE} target="_blank" rel="noopener" class="btn btn-principal">
+				<Icono nombre="youtube" />
+				Suscríbete al canal
+			</a>
+		</section>
+
+		<section class="tarjeta redes-tarjeta">
+			<span class="bloque-titulo">Redes sociales</span>
+			<Redes />
+		</section>
+	</main>
 </Layout>
 
-
-
-
 <style>
+	.sobre {
+		max-width: 560px;
+		padding-top: 48px;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
 
-main{
-      /*hace que todo el contenido este solo en el centro*/ 
-      display: flex;
-      justify-content: center;
-}
+	.perfil {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		padding: 36px 28px 32px;
+	}
 
-.content{
-      /*fuente*/
-      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-      /*color del texto */
-      color: #000;
-      /*necesario para que se centre la imagen y el h1 correctamente*/
-      display: grid;
-}
-.h1Tofen{
-      /*tamaño responsive de la fuente*/
-      font-size: clamp(2rem, 4vw, 25rem);
-      /*centra el texto*/
-      text-align: center;
-      /*centra el texto visualmente con la imagen*/
-}
+	.avatar {
+		width: 72px;
+		height: 72px;
+		border-radius: 50%;
+		margin-bottom: 16px;
+	}
 
+	.perfil h1 {
+		font-size: 24px;
+		font-weight: 800;
+		margin-top: 4px;
+	}
 
-.img{
-      margin-top: 5%;
-      border-radius: 100%;
-      justify-self: center;
-      width: 40%;
-}
+	.alias {
+		font-size: 13px;
+		color: var(--texto-2);
+	}
 
-.acercaDe_h2{
-      padding-left: 3vh;
-      font-size: clamp(1.5rem, 3vw, 5rem);
+	.datos {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 8px 20px;
+		list-style: none;
+		margin: 18px 0 0;
+		padding: 0;
+	}
 
+	.datos li {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 13px;
+		font-weight: 600;
+	}
 
-}
+	.datos :global(svg) {
+		color: var(--naranja-texto);
+	}
 
-.info{
-      border-left: #000 3px solid;
-      font-size: clamp(1rem, 1.5vw, 3rem);
-      margin-left: 8%;
-      margin-right: 5%;
-}
+	.bio {
+		font-size: 14px;
+		color: var(--texto-2);
+		max-width: 42ch;
+		margin: 16px 0 24px;
+	}
 
-.inst_img{
-      width: 5vw;
-}
+	.redes-tarjeta {
+		padding: 16px 20px;
+	}
 
-.tik_img{
-      width: 5vw;
-}
-
-.YT_img{
-      width: 5vw;
-
-}
-
-
-
-.redes_sociales_h1{
-      text-align: center;
-      margin-left: 3% ;
-      font-size: clamp(2rem, 4vw, 10rem);
-}
-
-
-
-
-.redes_sociales_ul {
-      list-style: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 2vw;
-}
-
-
+	.bloque-titulo {
+		display: block;
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--texto-2);
+		margin-bottom: 6px;
+	}
 </style>

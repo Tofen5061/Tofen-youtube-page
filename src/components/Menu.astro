@@ -1,75 +1,107 @@
+---
+import Icono from './Icono.astro';
+import { SUSCRIBIRSE } from '../data/sitio';
 
+const ruta = Astro.url.pathname;
+const enlaces = [
+	{ texto: 'Inicio', url: '/', activo: ruta === '/' || ruta.startsWith('/articles') },
+	{ texto: 'Sobre mí', url: '/about', activo: ruta.startsWith('/about') },
+];
+---
 
-<main class="mainMenu">
+<header class="barra">
+	<div class="contenedor barra-interior">
+		<a href="/" class="logo" aria-label="Tofen, ir al inicio">
+			<picture>
+				<source srcset="/marca/tofen-logo-horizontal-fondo-oscuro.svg" media="(prefers-color-scheme: dark)" />
+				<img src="/marca/tofen-logo-horizontal-fondo-claro.svg" alt="Tofen" width="112" height="21" />
+			</picture>
+		</a>
 
-    <div class="menu">
-        <img class="tofenImg" src="https://i.pinimg.com/564x/f1/c2/ed/f1c2ed1000720bfcaeaa95d8bf917ddb.jpg" alt="Logo">
-        <h2 class="tofen" >Tofen</h2>
-        <a href="/">home</a>
-        <a class="about" href="/about">about</a>
-    </div>
-</main>
+		<nav class="enlaces" aria-label="Principal">
+			{enlaces.map((e) => (
+				<a href={e.url} class:list={['enlace', { activo: e.activo }]} aria-current={e.activo ? 'page' : undefined}>
+					{e.texto}
+				</a>
+			))}
+		</nav>
+
+		<a href={SUSCRIBIRSE} class="btn btn-principal suscribirse" target="_blank" rel="noopener">
+			<Icono nombre="youtube" />
+			<span>Suscríbete</span>
+		</a>
+	</div>
+</header>
 
 <style>
+	.barra {
+		position: sticky;
+		top: 0;
+		z-index: 10;
+		background: color-mix(in srgb, var(--card) 88%, transparent);
+		backdrop-filter: saturate(1.4) blur(10px);
+		border-bottom: 1px solid var(--borde);
+	}
 
-    body{
-        padding: 0%;
-        margin: 0% ;
-    }
+	.barra-interior {
+		display: flex;
+		align-items: center;
+		gap: 24px;
+		height: 60px;
+	}
 
-    .mainMenu{
-        font-family: "League Spartan Variable", sans-serif;
-    }
+	.logo {
+		display: flex;
+		align-items: center;
+		margin-right: auto;
+	}
 
-    .tofen {
-        margin-right: auto;
-        margin-left: -0.7em;
-    }
+	.logo img {
+		height: 21px;
+		width: auto;
+	}
 
-    .menu {
-        /*orden*/
-        display: flex;
-        justify-content:right;
-        align-items: center;
-        /*separacion y tamaño*/
-        gap: clamp(1rem, 2vw, 20rem);
-        width: 100%;
-        /*colores*/
-        background-color: rgb(0, 0, 0) ;
-        color: white;
-        /*configuraciones de letra*/
+	.enlaces {
+		display: flex;
+		gap: 4px;
+	}
 
-    }
+	.enlace {
+		display: inline-flex;
+		align-items: center;
+		height: 34px;
+		padding: 0 12px;
+		border-radius: 8px;
+		font-size: 13px;
+		font-weight: 600;
+		color: var(--texto-2);
+		text-decoration: none;
+		transition: background-color 150ms, color 150ms;
+	}
 
-    .tofenImg {
-        width: 4rem;
-        height: 4rem;
-        margin-left: 2%;
-        padding: 0.5rem;
-        border-radius: 5rem;
-    }
+	.enlace:hover {
+		background: var(--bg-sutil);
+		color: var(--texto);
+	}
 
-    a {
-        color: white;
-        text-decoration: none;
-        font-size: clamp(1.1rem, 3.5vw, 1.4rem);
-        font-weight: 700;
-    }
+	.enlace.activo {
+		color: var(--texto);
+		font-weight: 700;
+	}
 
-
-    .about {
-        margin-right: 2rem;
-    }
-
-    @media screen and (max-width: 700px) {
-
-      .contact{
-        margin-right: 1rem ;
-      }
-
-      .tofenImg {
-        width:3rem;
-        height: 3rem;
-      }
-    }
+	@media (max-width: 560px) {
+		.barra-interior {
+			gap: 8px;
+		}
+		.enlace {
+			padding: 0 8px;
+		}
+		.suscribirse {
+			width: 38px;
+			padding: 0;
+		}
+		.suscribirse span {
+			display: none;
+		}
+	}
 </style>

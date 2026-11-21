@@ -1,0 +1,189 @@
+/* Estilo Tofen: neutros fríos, naranja en pequeñas dosis, bordes finos */
+:root {
+	--bg: #F6F8FB;
+	--bg-sutil: #EEF1F6;
+	--card: #FFFFFF;
+	--borde: #E3E7EE;
+	--texto: #0E1016;
+	--texto-2: #6B7280;
+	--texto-3: #9AA1AE;
+	--naranja: #FE853A;
+	--naranja-press: #EE7426;
+	--naranja-texto: #B8531A;
+	--durazno: #FFF3EC;
+	--durazno-borde: #FFE4D3;
+	--sombra: 0 1px 2px #0F12190D;
+	--sombra-flot: 0 8px 24px #0F12191A;
+	--halo: 0 0 0 3px #FE853A33;
+	--radio-c: 10px;
+	--radio-p: 14px;
+	--ancho: 1120px;
+	color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bg: #0A0C11;
+		--bg-sutil: #11141B;
+		--card: #14171F;
+		--borde: #272D3A;
+		--texto: #F3F5FB;
+		--texto-2: #9BA3B4;
+		--texto-3: #6B7385;
+		--naranja: #FF8C44;
+		--naranja-press: #FF9D5C;
+		--naranja-texto: #FFA266;
+		--durazno: #2A1A10;
+		--durazno-borde: #4A2A16;
+		--sombra: 0 1px 2px #0000004D;
+		--sombra-flot: 0 8px 24px #00000080;
+		--halo: 0 0 0 3px #FF8C4440;
+		color-scheme: dark;
+	}
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	font-family: 'Nunito Variable', system-ui, sans-serif;
+	font-size: 14px;
+	line-height: 1.6;
+	color: var(--texto);
+	background: var(--bg);
+	-webkit-font-smoothing: antialiased;
+	text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background: var(--bg);
+}
+
+body > main {
+	flex: 1;
+}
+
+img {
+	max-width: 100%;
+	display: block;
+}
+
+a {
+	color: inherit;
+}
+
+h1, h2, h3 {
+	margin: 0;
+	letter-spacing: -0.02em;
+	line-height: 1.25;
+}
+
+p {
+	margin: 0;
+}
+
+:focus-visible {
+	outline: none;
+	box-shadow: var(--halo);
+	border-radius: 6px;
+}
+
+.contenedor {
+	width: 100%;
+	max-width: var(--ancho);
+	margin: 0 auto;
+	padding: 0 16px;
+}
+
+@media (min-width: 720px) {
+	.contenedor {
+		padding: 0 32px;
+	}
+}
+
+/* Eyebrow: mayúsculas pequeñas con letras separadas */
+.eyebrow {
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--naranja-texto);
+}
+
+/* Botón principal (uno por vista) */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	height: 38px;
+	padding: 0 16px;
+	border-radius: var(--radio-c);
+	font: inherit;
+	font-size: 13px;
+	font-weight: 700;
+	text-decoration: none;
+	cursor: pointer;
+	border: 1px solid transparent;
+	transition: background-color 150ms, border-color 150ms, color 150ms;
+	white-space: nowrap;
+}
+
+.btn svg {
+	width: 16px;
+	height: 16px;
+	flex: none;
+}
+
+.btn-principal {
+	background: var(--naranja);
+	color: #fff;
+}
+
+.btn-principal:hover {
+	background: var(--naranja-press);
+}
+
+@media (prefers-color-scheme: dark) {
+	.btn-principal {
+		color: #1A0E06;
+	}
+}
+
+.btn-secundario {
+	background: var(--card);
+	border-color: var(--borde);
+	color: var(--texto);
+}
+
+.btn-secundario:hover {
+	background: var(--bg-sutil);
+}
+
+/* Mini etiqueta suave */
+.etiqueta {
+	display: inline-flex;
+	align-items: center;
+	height: 20px;
+	padding: 0 8px;
+	border-radius: 999px;
+	font-size: 11px;
+	font-weight: 700;
+	background: var(--durazno);
+	color: var(--naranja-texto);
+	border: 1px solid var(--durazno-borde);
+}
+
+.tarjeta {
+	background: var(--card);
+	border: 1px solid var(--borde);
+	border-radius: var(--radio-p);
+	box-shadow: var(--sombra);
+}

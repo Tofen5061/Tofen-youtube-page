@@ -1,63 +1,63 @@
 ---
-interface Props {
-	title: string;
-}
-
-const { title } = Astro.props;
+import '@fontsource-variable/nunito';
+import '../styles/global.css';
 import Footer from '../components/Footer.astro';
 import Menu from '../components/Menu.astro';
-import '@fontsource-variable/league-spartan';
+import { ADSENSE_CLIENTE } from '../data/sitio';
+
+interface Props {
+	title: string;
+	description?: string;
+	image?: string;
+}
+
+const {
+	title,
+	description = 'Tutoriales de programación y tecnología de Tofen: guías paso a paso, descargas y videos del canal.',
+	image = '/AutoCad.png',
+} = Astro.props;
+
+const sitio = 'https://tofen-youtube-page.vercel.app';
+const urlPagina = new URL(Astro.url.pathname, sitio).href;
+const urlImagen = new URL(image, sitio).href;
+// AdSense solo en la versión publicada, nunca en local
+const cargarAnuncios = import.meta.env.PROD;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="google-adsense-account" content="ca-pub-6818329352848462">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>{title}</title>
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6818329352848462"
-     crossorigin="anonymous"></script>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={urlPagina} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<meta name="theme-color" content="#F6F8FB" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#0A0C11" media="(prefers-color-scheme: dark)" />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Tofen" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={urlPagina} />
+		<meta property="og:image" content={urlImagen} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="google-adsense-account" content={ADSENSE_CLIENTE} />
+		{cargarAnuncios && (
+			<script
+				is:inline
+				async
+				src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENTE}`}
+				crossorigin="anonymous"
+			></script>
+		)}
 	</head>
 	<body>
-        <Menu />
+		<Menu />
 		<slot />
-        <Footer />
+		<Footer />
 	</body>
 </html>
-<style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
-	html {
-        font-family: 'League Spartan Variable', sans-serif;
-		background: #ffffff;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
-
-	body{
-		height: 100%;
-		width: 100%;
-	}
-</style>

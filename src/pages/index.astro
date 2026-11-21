@@ -1,24 +1,143 @@
 ---
-import CardsComponent from "../components/Cards_list.astro";
-import Layout from "../layouts/Layout.astro";
-
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Icono from '../components/Icono.astro';
+import Anuncio from '../components/Anuncio.astro';
+import { CONTENIDO, SUSCRIBIRSE } from '../data/sitio';
 ---
 
+<Layout title="Tofen · Tutoriales de programación y tecnología">
+	<main>
+		<section class="contenedor portada">
+			<span class="eyebrow">Canal de YouTube</span>
+			<h1>Tutoriales de programación y tecnología</h1>
+			<p class="bajada">
+				Guías paso a paso, descargas y todo lo que aparece en los videos de Tofen, en un solo lugar.
+			</p>
+		</section>
 
-<Layout title="Tofen">
-    <main>
-        <div class="articles">
-          <CardsComponent />
-        </div>
-    </main>
+		<section class="contenedor" aria-labelledby="titulo-contenido">
+			<div class="encabezado">
+				<h2 id="titulo-contenido">Contenido</h2>
+				<span class="conteo">{CONTENIDO.length} publicados</span>
+			</div>
+
+			<div class="rejilla">
+				{CONTENIDO.map((c) => <Card {...c} />)}
+
+				<div class="proximo">
+					<span class="proximo-icono"><Icono nombre="reloj" tam={18} /></span>
+					<strong>Nuevo contenido en camino</strong>
+					<p>Cada video nuevo del canal aparecerá aquí con su guía.</p>
+					<a href={SUSCRIBIRSE} target="_blank" rel="noopener" class="proximo-enlace">
+						Activa la campanita en YouTube <Icono nombre="flecha" tam={14} />
+					</a>
+				</div>
+			</div>
+
+			<div class="anuncio-inicio">
+				<Anuncio />
+			</div>
+		</section>
+	</main>
 </Layout>
 
-
-
 <style>
+	.portada {
+		padding-top: 56px;
+		padding-bottom: 40px;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		max-width: var(--ancho);
+	}
 
-main{
-    background-color: #f0f2f5;
-}
+	.portada h1 {
+		font-size: clamp(26px, 4vw, 36px);
+		font-weight: 800;
+		max-width: 24ch;
+	}
 
+	.bajada {
+		font-size: 15px;
+		color: var(--texto-2);
+		max-width: 52ch;
+	}
+
+	.encabezado {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		margin-bottom: 16px;
+	}
+
+	.encabezado h2 {
+		font-size: 16px;
+		font-weight: 800;
+	}
+
+	.conteo {
+		font-size: 12px;
+		color: var(--texto-2);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.rejilla {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+		gap: 20px;
+	}
+
+	.proximo {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: center;
+		gap: 6px;
+		padding: 28px 24px;
+		border: 1px dashed var(--borde);
+		border-radius: var(--radio-p);
+		background: transparent;
+		min-height: 220px;
+	}
+
+	.proximo-icono {
+		display: grid;
+		place-items: center;
+		width: 36px;
+		height: 36px;
+		border-radius: 10px;
+		background: var(--durazno);
+		color: var(--naranja-texto);
+		margin-bottom: 6px;
+	}
+
+	.proximo strong {
+		font-size: 15px;
+		font-weight: 800;
+	}
+
+	.proximo p {
+		font-size: 13px;
+		color: var(--texto-2);
+	}
+
+	.proximo-enlace {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		margin-top: 8px;
+		font-size: 13px;
+		font-weight: 700;
+		color: var(--naranja-texto);
+		text-decoration: none;
+	}
+
+	.proximo-enlace:hover {
+		text-decoration: underline;
+	}
+
+	.anuncio-inicio {
+		margin-top: 40px;
+	}
 </style>

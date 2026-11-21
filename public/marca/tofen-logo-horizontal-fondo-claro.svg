@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -25 817.33 150" role="img" aria-label="Tofen">
+  <title>Tofen</title>
+  <g transform="translate(0 -25) scale(0.23041)"><defs>
+    <linearGradient id="h-fondo-claro-b" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="813" y2="130"><stop offset="0" stop-color="#FDA022"/><stop offset="1" stop-color="#FB8412"/></linearGradient>
+    <linearGradient id="h-fondo-claro-t" gradientUnits="userSpaceOnUse" x1="400" y1="130" x2="240" y2="651"><stop offset="0" stop-color="#FB8214"/><stop offset="1" stop-color="#F86F0E"/></linearGradient>
+    <linearGradient id="h-fondo-claro-m" gradientUnits="userSpaceOnUse" x1="357" y1="358" x2="697" y2="240"><stop offset="0" stop-color="#EA580C"/><stop offset="1" stop-color="#F5640E"/></linearGradient>
+    <linearGradient id="h-fondo-claro-p" gradientUnits="userSpaceOnUse" x1="467" y1="420" x2="250" y2="651"><stop offset="0" stop-color="#EE580A"/><stop offset="1" stop-color="#DC4605"/></linearGradient>
+  </defs>
+  <path fill="#F97316" d="M115 0 L813 0 L685 130 L0 130 Z M378 130 L410 130 L327 382 L235 651 L238 247 Z M475 240 L697 240 L579 358 L357 358 Z M357 358 L467 460 L235 651 L327 382 Z"/>
+  <polygon fill="url(#h-fondo-claro-b)" points="115,0 813,0 685,130 0,130"/>
+  <polygon fill="url(#h-fondo-claro-t)" points="378,130 410,130 327,382 235,651 238,247"/>
+  <polygon fill="url(#h-fondo-claro-m)" points="475,240 697,240 579,358 357,358"/>
+  <polygon fill="url(#h-fondo-claro-p)" points="357,358 467,460 235,651 327,382"/></g>
+  <g transform="translate(221.33 0)"><polygon fill="#18181B" points="18,0 112,0 94,18 0,18"/>
+  <polygon fill="#18181B" points="47,18 65,18 65,100 47,100"/>
+  <polygon fill="#18181B" points="246,0 356,0 338,18 264,18 264,100 246,100"/>
+  <polygon fill="#F97316" points="282,41 344,41 326,59 264,59"/>
+  <polygon fill="#18181B" points="378,0 482,0 464,18 396,18 396,41 460,41 442,59 396,59 396,82 482,82 464,100 378,100"/>
+  <polygon fill="#18181B" points="504,100 504,0 524,0 578,72 578,0 596,0 596,100 576,100 522,28 522,100"/>
+  <path fill="#18181B" fill-rule="evenodd" d="M160 0 H198 A24 24 0 0 1 222 24 V76 A24 24 0 0 1 198 100 H160 A24 24 0 0 1 136 76 V24 A24 24 0 0 1 160 0 Z M162 18 A8 8 0 0 0 154 26 V74 A8 8 0 0 0 162 82 H196 A8 8 0 0 0 204 74 V26 A8 8 0 0 0 196 18 Z"/></g>
+</svg>

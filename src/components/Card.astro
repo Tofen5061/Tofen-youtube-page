@@ -1,68 +1,90 @@
 ---
-const {img, alt_img, title, url} = Astro.props
+import Icono from './Icono.astro';
+interface Props {
+	titulo: string;
+	descripcion: string;
+	imagen: string;
+	url: string;
+	etiqueta: string;
+}
+const { titulo, descripcion, imagen, url, etiqueta } = Astro.props;
 ---
 
-
-<article>
-    <a class="card_enlace" href={url}>
-        <div class="card_container">
-            <img src={img} alt={alt_img}>
-            <div class="card_name"><h1>{title}</h1></div>
-        </div>
-    </a>
+<article class="tarjeta card">
+	<a href={url} class="card-enlace">
+		<div class="miniatura">
+			<img src={imagen} alt="" loading="lazy" />
+		</div>
+		<div class="card-cuerpo">
+			<span class="etiqueta">{etiqueta}</span>
+			<h2 class="card-titulo">{titulo}</h2>
+			<p class="card-desc">{descripcion}</p>
+			<span class="card-ver">Ver guía <Icono nombre="flecha" tam={14} /></span>
+		</div>
+	</a>
 </article>
 
 <style>
+	.card {
+		overflow: hidden;
+		transition: border-color 150ms, box-shadow 150ms, transform 150ms;
+	}
 
-.card_container{
-    height: 205px ;
-    width: 280px;
-    border-radius: 4%;
-    box-shadow: 0px 0px 6px -2px black;
-    display: flex;
-    flex-direction: column;
-    transition: 0.3s ease;
-    background-color: white;
-}
+	.card:hover {
+		border-color: var(--durazno-borde);
+		box-shadow: var(--sombra-flot);
+		transform: translateY(-2px);
+	}
 
-.card_container:hover {
-transform: scale(1.05);
-cursor: pointer;
-background-color: white;
-}
+	.card-enlace {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		text-decoration: none;
+		color: inherit;
+	}
 
-.card_enlace{
-    text-decoration: none;
-    color: black;
-    height: 205px;
-    width: 280px;
-    background-color: white;
-}
+	.miniatura {
+		aspect-ratio: 16 / 9;
+		background: var(--bg-sutil);
+		border-bottom: 1px solid var(--borde);
+		overflow: hidden;
+	}
 
-img{
-    object-fit: cover;
-    overflow: hidden;
-    width: 100%;
-    border-radius: inherit;
-}
+	.miniatura img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
 
-.card_name{
-        font-family: "League Spartan Variable", sans-serif;
-    font-weight: 900;
-    justify-content: start;
-    align-items: start;
-    font-size: 0.7rem;
-}
+	.card-cuerpo {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 6px;
+		padding: 16px 20px 20px;
+		flex: 1;
+	}
 
-h1{
-    margin: 4%;
-}
+	.card-titulo {
+		font-size: 15px;
+		font-weight: 800;
+		margin-top: 4px;
+	}
 
-article{
-height: 205px;
-width: 280px;
-background-color: white;
-border-radius: 4%;
-}
+	.card-desc {
+		font-size: 13px;
+		color: var(--texto-2);
+	}
 
+	.card-ver {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		margin-top: auto;
+		padding-top: 10px;
+		font-size: 13px;
+		font-weight: 700;
+		color: var(--naranja-texto);
+	}
 </style>

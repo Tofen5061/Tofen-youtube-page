@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Tofen">
+  <title>Tofen</title>
+  <circle cx="512" cy="512" r="512" fill="#18181B"/>
+  <g transform="translate(212 271.78) scale(0.73801)"><defs>
+    <linearGradient id="i-avatar-b" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="813" y2="130"><stop offset="0" stop-color="#FDA022"/><stop offset="1" stop-color="#FB8412"/></linearGradient>
+    <linearGradient id="i-avatar-t" gradientUnits="userSpaceOnUse" x1="400" y1="130" x2="240" y2="651"><stop offset="0" stop-color="#FB8214"/><stop offset="1" stop-color="#F86F0E"/></linearGradient>
+    <linearGradient id="i-avatar-m" gradientUnits="userSpaceOnUse" x1="357" y1="358" x2="697" y2="240"><stop offset="0" stop-color="#EA580C"/><stop offset="1" stop-color="#F5640E"/></linearGradient>
+    <linearGradient id="i-avatar-p" gradientUnits="userSpaceOnUse" x1="467" y1="420" x2="250" y2="651"><stop offset="0" stop-color="#EE580A"/><stop offset="1" stop-color="#DC4605"/></linearGradient>
+  </defs>
+  <path fill="#F97316" d="M115 0 L813 0 L685 130 L0 130 Z M378 130 L410 130 L327 382 L235 651 L238 247 Z M475 240 L697 240 L579 358 L357 358 Z M357 358 L467 460 L235 651 L327 382 Z"/>
+  <polygon fill="url(#i-avatar-b)" points="115,0 813,0 685,130 0,130"/>
+  <polygon fill="url(#i-avatar-t)" points="378,130 410,130 327,382 235,651 238,247"/>
+  <polygon fill="url(#i-avatar-m)" points="475,240 697,240 579,358 357,358"/>
+  <polygon fill="url(#i-avatar-p)" points="357,358 467,460 235,651 327,382"/></g>
+</svg>
