@@ -35,45 +35,49 @@
 /* Modo oscuro: sigue al sistema, salvo que la persona elija otro en el selector */
 @media (prefers-color-scheme: dark) {
 	:root:not([data-theme='light']) {
-		--bg: #0A0C11;
-		--bg-alt: #0F1218;
-		--card: #14171F;
-		--border: #272D3A;
-		--text: #F3F5FB;
-		--muted: #9AA3B5;
-		--faint: #6B7385;
-		--orange: #FF8C44;
-		--orange-press: #FF9D5E;
-		--orange-text: #FFA66E;
-		--peach: #2A1C13;
-		--peach-border: #4A2E1C;
-		--green-bg: #11291D;
+		/* Grafito neutro (los grises del kit TofenMarca), sin el tono azulado */
+		--bg: #0C0C0E;
+		--bg-alt: #121214;
+		--card: #18181B;
+		--border: #2A2A2F;
+		--text: #FAFAFA;
+		--muted: #A1A1AA;
+		--faint: #71717A;
+		/* Naranja vivo, como en Tofen ERP */
+		--orange: #FF7A1F;
+		--orange-press: #FF8F3D;
+		--orange-text: #FF9A4D;
+		--peach: #FF7A1F1F;
+		--peach-border: #FF7A1F59;
+		--green-bg: #4ADE801A;
 		--green: #4ADE80;
-		--shadow: 0 1px 2px #00000040;
-		--shadow-float: 0 12px 32px #00000066, 0 2px 6px #00000040;
-		--ring: 0 0 0 3px #FF8C4459;
+		--shadow: 0 1px 2px #00000059;
+		--shadow-float: 0 12px 32px #00000080, 0 2px 6px #00000059;
+		--ring: 0 0 0 3px #FF7A1F66;
 		color-scheme: dark;
 	}
 }
 
 :root[data-theme='dark'] {
-	--bg: #0A0C11;
-	--bg-alt: #0F1218;
-	--card: #14171F;
-	--border: #272D3A;
-	--text: #F3F5FB;
-	--muted: #9AA3B5;
-	--faint: #6B7385;
-	--orange: #FF8C44;
-	--orange-press: #FF9D5E;
-	--orange-text: #FFA66E;
-	--peach: #2A1C13;
-	--peach-border: #4A2E1C;
-	--green-bg: #11291D;
+	/* Grafito neutro (los grises del kit TofenMarca), sin el tono azulado */
+	--bg: #0C0C0E;
+	--bg-alt: #121214;
+	--card: #18181B;
+	--border: #2A2A2F;
+	--text: #FAFAFA;
+	--muted: #A1A1AA;
+	--faint: #71717A;
+	/* Naranja vivo, como en Tofen ERP */
+	--orange: #FF7A1F;
+	--orange-press: #FF8F3D;
+	--orange-text: #FF9A4D;
+	--peach: #FF7A1F1F;
+	--peach-border: #FF7A1F59;
+	--green-bg: #4ADE801A;
 	--green: #4ADE80;
-	--shadow: 0 1px 2px #00000040;
-	--shadow-float: 0 12px 32px #00000066, 0 2px 6px #00000040;
-	--ring: 0 0 0 3px #FF8C4459;
+	--shadow: 0 1px 2px #00000059;
+	--shadow-float: 0 12px 32px #00000080, 0 2px 6px #00000059;
+	--ring: 0 0 0 3px #FF7A1F66;
 	color-scheme: dark;
 }
 

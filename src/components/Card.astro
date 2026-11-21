@@ -6,8 +6,9 @@ interface Props {
 	imagen: string;
 	url: string;
 	etiqueta: string;
+	verGuia?: string;
 }
-const { titulo, descripcion, imagen, url, etiqueta } = Astro.props;
+const { titulo, descripcion, imagen, url, etiqueta, verGuia = 'Ver guía' } = Astro.props;
 ---
 
 <a href={url} class="card video">
@@ -20,7 +21,7 @@ const { titulo, descripcion, imagen, url, etiqueta } = Astro.props;
 			<b>{titulo}</b>
 			<small>{descripcion}</small>
 		</span>
-		<span class="ver">Ver guía <Icono nombre="flecha" /></span>
+		<span class="ver">{verGuia} <Icono nombre="flecha" /></span>
 	</div>
 </a>
 

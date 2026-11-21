@@ -1,0 +1,118 @@
+---
+// Página "Sobre mí", compartida por /about y /en/about
+import Layout from '../../layouts/Layout.astro';
+import Redes from '../Redes.astro';
+import Icono from '../Icono.astro';
+import { SUSCRIBIRSE } from '../../data/sitio';
+import { idiomaDe, textos } from '../../i18n';
+
+const t = textos(idiomaDe(Astro.url)).sobre;
+---
+
+<Layout title={t.metaTitulo} description={t.metaDesc}>
+	<main class="wrap sobre">
+		<section class="card perfil">
+			<img src="/marca/tofen-avatar.svg" alt="" class="avatar" width="72" height="72" />
+			<span class="eyebrow">{t.eyebrow}</span>
+			<h1>Kevin Richtofen</h1>
+			<p class="alias">Tofen</p>
+
+			<ul class="datos">
+				<li><Icono nombre="mapa" /> {t.pais}</li>
+				<li><Icono nombre="codigo" /> {t.tema}</li>
+			</ul>
+
+			<p class="bio">{t.bio}</p>
+
+			<a href={SUSCRIBIRSE} target="_blank" rel="noopener" class="btn btn-yt">
+				<Icono nombre="youtube" />
+				{t.boton}
+			</a>
+		</section>
+
+		<section class="card redes-tarjeta">
+			<span class="bloque-titulo">{t.redes}</span>
+			<Redes />
+		</section>
+	</main>
+</Layout>
+
+<style>
+	.sobre {
+		max-width: 560px;
+		padding-top: 56px;
+		padding-bottom: 72px;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	.perfil {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		padding: 36px 28px 32px;
+	}
+
+	.avatar {
+		width: 72px;
+		height: 72px;
+		border-radius: 50%;
+		margin-bottom: 16px;
+	}
+
+	.perfil h1 {
+		font-size: 28px;
+		font-weight: 800;
+		margin-top: 4px;
+	}
+
+	.alias {
+		font-size: 13px;
+		color: var(--muted);
+	}
+
+	.datos {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 8px 20px;
+		list-style: none;
+		margin: 18px 0 0;
+		padding: 0;
+	}
+
+	.datos li {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 13px;
+		font-weight: 600;
+	}
+
+	.datos :global(svg) {
+		color: var(--orange-text);
+	}
+
+	.bio {
+		font-size: 15px;
+		color: var(--muted);
+		max-width: 42ch;
+		margin: 16px 0 24px;
+	}
+
+	.redes-tarjeta {
+		padding: 16px 20px;
+	}
+
+	.bloque-titulo {
+		display: block;
+		font-size: 11px;
+		font-weight: 800;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--muted);
+		margin-bottom: 6px;
+	}
+</style>

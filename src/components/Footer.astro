@@ -1,6 +1,10 @@
 ---
 import Icono from './Icono.astro';
 import { REDES } from '../data/sitio';
+import { idiomaDe, ruta, textos } from '../i18n';
+const idioma = idiomaDe(Astro.url);
+const t = textos(idioma);
+const inicio = ruta(idioma, '/');
 const anio = new Date().getFullYear();
 ---
 
@@ -8,22 +12,22 @@ const anio = new Date().getFullYear();
 	<div class="wrap">
 		<div class="footer-in">
 			<div class="footer-brand">
-				<a href="/" class="brand">
+				<a href={inicio} class="brand">
 					<img src="/marca/tofen-app-icon-oscuro.svg" alt="" width="28" height="28" />
 					Tofen
 				</a>
-				<p class="muted">Tutoriales de programación y tecnología.<br />Hecho en Nicaragua.</p>
+				<p class="muted">{t.pie.lema}<br />{t.pie.hecho}</p>
 			</div>
 
 			<div class="footer-cols">
 				<div>
-					<p class="foot-title">Sitio</p>
-					<a href="/#contenido" class="foot-link">Contenido</a>
-					<a href="/#temas" class="foot-link">Temas</a>
-					<a href="/about" class="foot-link">Sobre mí</a>
+					<p class="foot-title">{t.pie.sitio}</p>
+					<a href={`${inicio}#contenido`} class="foot-link">{t.menu.contenido}</a>
+					<a href={`${inicio}#temas`} class="foot-link">{t.menu.temas}</a>
+					<a href={ruta(idioma, '/about')} class="foot-link">{t.menu.sobre}</a>
 				</div>
 				<div>
-					<p class="foot-title">Redes</p>
+					<p class="foot-title">{t.pie.redes}</p>
 					{REDES.map((r) => (
 						<a href={r.url} target="_blank" rel="noopener" class="foot-link">
 							<Icono nombre={r.red} />

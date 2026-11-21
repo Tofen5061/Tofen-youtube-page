@@ -10,8 +10,9 @@ export const ADSENSE_BLOQUE = '9512567430';
 
 export type Red = 'youtube' | 'tiktok' | 'instagram';
 
+// Si usuario va vacío, se muestra el texto traducido de i18n.ts
 export const REDES: { red: Red; nombre: string; usuario: string; url: string }[] = [
-	{ red: 'youtube', nombre: 'YouTube', usuario: 'Tutoriales y videos', url: CANAL_YOUTUBE },
+	{ red: 'youtube', nombre: 'YouTube', usuario: '', url: CANAL_YOUTUBE },
 	{ red: 'tiktok', nombre: 'TikTok', usuario: '@tofenrich', url: 'https://www.tiktok.com/@tofenrich' },
 	{ red: 'instagram', nombre: 'Instagram', usuario: '@tofen_kevin', url: 'https://www.instagram.com/tofen_kevin/' },
 ];
@@ -21,15 +22,19 @@ export const CONTENIDO = [
 	{
 		titulo: 'Idiomas AutoCad 2024-2026',
 		descripcion: 'Cambia AutoCAD de inglés a español (o al revés) sin reinstalar.',
+		descripcion_en: 'Switch AutoCAD between English and Spanish without reinstalling.',
 		imagen: '/AutoCad.png',
 		url: '/articles/Autocad_lang',
 		etiqueta: 'Tutorial',
+		etiqueta_en: 'Tutorial',
 	},
 	{
 		titulo: 'Descarga Youtube Music Premiun Gratis 2024',
 		descripcion: 'Qué es YouTube Music Premium y qué ventajas trae.',
+		descripcion_en: 'What YouTube Music Premium is and what it offers.',
 		imagen: '/ytmusic.jpg',
 		url: '/articles/yt_music',
 		etiqueta: 'Apps',
+		etiqueta_en: 'Apps',
 	},
 ];

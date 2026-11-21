@@ -1,18 +1,26 @@
 ---
 import Icono from './Icono.astro';
 import { SUSCRIBIRSE } from '../data/sitio';
+import { idiomaDe, ruta, rutaEquivalente, textos } from '../i18n';
 
-const ruta = Astro.url.pathname;
+const idioma = idiomaDe(Astro.url);
+const t = textos(idioma).menu;
+const camino = Astro.url.pathname;
+const inicio = ruta(idioma, '/');
 const enlaces = [
-	{ texto: 'Contenido', url: '/#contenido', activo: ruta.startsWith('/articles') },
-	{ texto: 'Temas', url: '/#temas', activo: false },
-	{ texto: 'Sobre mí', url: '/about', activo: ruta.startsWith('/about') },
+	{ texto: t.contenido, url: `${inicio}#contenido`, activo: camino.startsWith('/articles') },
+	{ texto: t.temas, url: `${inicio}#temas`, activo: false },
+	{ texto: t.sobre, url: ruta(idioma, '/about'), activo: /\/about/.test(camino) },
 ];
+const idiomas = [
+	{ codigo: 'es', texto: 'ES', nombre: 'Español', url: rutaEquivalente(Astro.url, 'es') },
+	{ codigo: 'en', texto: 'EN', nombre: 'English', url: rutaEquivalente(Astro.url, 'en') },
+] as const;
 ---
 
 <header class="topbar">
 	<div class="wrap topbar-in">
-		<a href="/" class="brand" aria-label="Tofen, ir al inicio">
+		<a href={inicio} class="brand" aria-label={t.irInicio}>
 			<img src="/marca/tofen-app-icon-oscuro.svg" alt="" width="28" height="28" />
 			Tofen
 		</a>
@@ -26,13 +34,36 @@ const enlaces = [
 		</nav>
 
 		<div class="acciones">
-			<button type="button" class="tema" id="cambiar-tema" aria-label="Cambiar a modo oscuro" title="Cambiar tema">
+			<!-- Selector de idioma -->
+			<div class="idiomas" role="group" aria-label={t.idioma}>
+				{idiomas.map((i) => (
+					<a
+						href={i.url}
+						hreflang={i.codigo}
+						lang={i.codigo}
+						title={i.nombre}
+						class:list={{ on: i.codigo === idioma }}
+						aria-current={i.codigo === idioma ? 'true' : undefined}
+					>
+						{i.texto}
+					</a>
+				))}
+			</div>
+			<button
+				type="button"
+				class="tema"
+				id="cambiar-tema"
+				aria-label={t.aOscuro}
+				title={t.tema}
+				data-a-oscuro={t.aOscuro}
+				data-a-claro={t.aClaro}
+			>
 				<span class="si-claro"><Icono nombre="luna" /></span>
 				<span class="si-oscuro"><Icono nombre="sol" /></span>
 			</button>
 			<a href={SUSCRIBIRSE} class="btn btn-yt btn-sm" target="_blank" rel="noopener">
 				<Icono nombre="youtube" />
-				<span class="txt">Suscríbete</span>
+				<span class="txt">{t.suscribete}</span>
 			</a>
 		</div>
 	</div>
@@ -98,6 +129,44 @@ const enlaces = [
 		gap: 8px;
 	}
 
+	/* Selector de idioma: dos opciones en una píldora, lo elegido con tinte naranja */
+	.idiomas {
+		display: flex;
+		align-items: center;
+		height: 36px;
+		padding: 3px;
+		gap: 2px;
+		border: 1px solid var(--border);
+		border-radius: var(--r-ctl);
+		background: var(--card);
+		box-shadow: var(--shadow);
+	}
+
+	.idiomas a {
+		display: grid;
+		place-items: center;
+		height: 28px;
+		min-width: 32px;
+		padding: 0 6px;
+		border-radius: 7px;
+		font-size: 12px;
+		font-weight: 800;
+		letter-spacing: 0.04em;
+		color: var(--muted);
+		transition: background-color 0.15s, color 0.15s;
+	}
+
+	.idiomas a:hover {
+		text-decoration: none;
+		color: var(--text);
+		background: var(--bg-alt);
+	}
+
+	.idiomas a.on {
+		background: var(--peach);
+		color: var(--orange-text);
+	}
+
 	/* Selector de tema: mismo alto que el botón de al lado */
 	.tema {
 		display: grid;
@@ -114,8 +183,8 @@ const enlaces = [
 	}
 
 	.tema:hover {
-		background: var(--bg);
-		color: var(--text);
+		background: var(--bg-alt);
+		color: var(--orange-text);
 	}
 
 	.tema span {
@@ -163,9 +232,18 @@ const enlaces = [
 		}
 	}
 
-	@media (max-width: 400px) {
+	@media (max-width: 480px) {
 		.topnav a:nth-child(1) {
 			display: none;
+		}
+	}
+
+	@media (max-width: 380px) {
+		.topnav {
+			display: none;
+		}
+		.acciones {
+			margin-left: auto;
 		}
 	}
 </style>
@@ -178,7 +256,8 @@ const enlaces = [
 	const esOscuro = () => (raiz.dataset.theme ? raiz.dataset.theme === 'dark' : sistemaOscuro());
 
 	function actualizarEtiqueta() {
-		boton?.setAttribute('aria-label', esOscuro() ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+		if (!boton) return;
+		boton.setAttribute('aria-label', esOscuro() ? boton.dataset.aClaro! : boton.dataset.aOscuro!);
 	}
 
 	boton?.addEventListener('click', () => {
