@@ -4,8 +4,8 @@ import Layout from '../../layouts/Layout.astro';
 import Card from '../Card.astro';
 import Icono from '../Icono.astro';
 import Anuncio from '../Anuncio.astro';
-import { CONTENIDO, SUSCRIBIRSE } from '../../data/sitio';
-import { idiomaDe, textos } from '../../i18n';
+import { CONTENIDO, SUSCRIBIRSE, SITIO, REDES } from '../../data/sitio';
+import { idiomaDe, ruta, textos } from '../../i18n';
 
 const idioma = idiomaDe(Astro.url);
 const t = textos(idioma);
@@ -16,16 +16,47 @@ const temas = (ti.temas as readonly { titulo: string; desc: string }[]).map((tem
 
 // Contenido con la descripción y etiqueta del idioma actual
 const contenido = CONTENIDO.map((c) => ({
-	titulo: c.titulo,
+	titulo: idioma === 'en' ? c.titulo_en : c.titulo,
 	imagen: c.imagen,
-	url: c.url,
+	url: idioma === 'en' ? c.url_en : c.url,
 	descripcion: idioma === 'en' ? c.descripcion_en : c.descripcion,
 	etiqueta: idioma === 'en' ? c.etiqueta_en : c.etiqueta,
 }));
 const [destacado, ...resto] = contenido;
+
+// Datos estructurados: el sitio, el autor y la lista de guías
+const jsonld = [
+	{
+		'@context': 'https://schema.org',
+		'@type': 'WebSite',
+		name: 'Tofen',
+		url: new URL(ruta(idioma, '/'), SITIO).href,
+		inLanguage: idioma === 'en' ? 'en-US' : 'es-NI',
+		description: t.meta.descripcion,
+	},
+	{
+		'@context': 'https://schema.org',
+		'@type': 'Person',
+		name: 'Kevin Richtofen',
+		alternateName: 'Tofen',
+		url: new URL(ruta(idioma, '/about'), SITIO).href,
+		homeLocation: { '@type': 'Country', name: 'Nicaragua' },
+		sameAs: REDES.map((r) => r.url),
+	},
+	{
+		'@context': 'https://schema.org',
+		'@type': 'ItemList',
+		itemListElement: contenido.map((c, i) => ({
+			'@type': 'ListItem',
+			position: i + 1,
+			name: c.titulo,
+			url: new URL(c.url, SITIO).href,
+		})),
+	},
+];
 ---
 
-<Layout title={t.meta.titulo}>
+<Layout title={t.meta.titulo} jsonld={jsonld}>
 	<main>
 		<!-- Portada -->
 		<section class="hero">

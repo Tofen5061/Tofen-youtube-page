@@ -1,5 +1,5 @@
 // Textos de la interfaz en español e inglés.
-// El español vive en "/" y el inglés en "/en/". Las guías (artículos) por ahora solo están en español.
+// El español vive en "/" y el inglés en "/en/" (incluidas las guías: /articles/x y /en/articles/x).
 
 export type Idioma = 'es' | 'en';
 
@@ -10,13 +10,14 @@ export function idiomaDe(url: URL): Idioma {
 // Arma un enlace interno en el idioma indicado: ruta('en', '/about') -> '/en/about'
 export function ruta(idioma: Idioma, camino: string): string {
 	if (idioma === 'es') return camino;
-	return camino === '/' ? '/en/' : `/en${camino}`;
+	return camino === '/' ? '/en' : `/en${camino}`;
 }
 
-// Página equivalente en el otro idioma (las guías no tienen versión en inglés, así que van al inicio)
+// Página equivalente en el otro idioma. La privacidad tiene nombre distinto en cada idioma.
 export function rutaEquivalente(url: URL, destino: Idioma): string {
 	let camino = url.pathname.replace(/^\/en(?=\/|$)/, '') || '/';
-	if (camino.startsWith('/articles')) camino = '/';
+	camino = camino.replace(/\/$/, '') || '/';
+	if (camino === '/privacidad' || camino === '/privacy') camino = destino === 'en' ? '/privacy' : '/privacidad';
 	return ruta(destino, camino);
 }
 
@@ -90,6 +91,18 @@ export const TEXTOS = {
 			redes: 'Redes',
 		},
 		redes: { youtube: 'Tutoriales y videos' },
+		articulo: {
+			volver: 'Volver al inicio',
+			inicio: 'Inicio',
+			guias: 'Guías',
+			descarga: 'Descarga',
+			archivo: 'El archivo que uso en el video',
+			descargar: 'Descargar',
+			sigueme: 'Sígueme',
+			teSirvio: '¿Te sirvió?',
+			proxima: 'Suscríbete para ver la próxima guía.',
+		},
+		legal: { privacidad: 'Privacidad' },
 	},
 	en: {
 		meta: {
@@ -111,7 +124,7 @@ export const TEXTOS = {
 			eyebrow: 'YouTube channel · Made in Nicaragua',
 			titulo: 'Learn programming and tech,',
 			tituloAcento: 'step by step',
-			bajada: 'Clear, no-nonsense tutorials (in Spanish). Here you’ll find the guide and downloads for every video on the channel.',
+			bajada: 'Clear, no-nonsense tutorials. Here you’ll find the guide and downloads for every video on the channel.',
 			suscribete: 'Subscribe on YouTube',
 			verContenido: 'See content',
 			puntos: ['Step-by-step guides', 'Downloads included', 'Free'],
@@ -124,7 +137,7 @@ export const TEXTOS = {
 			enlaceGuia: 'Link in the guide',
 			contEyebrow: 'Content',
 			contTitulo: 'A guide for every video',
-			contSub: 'The steps, links and downloads I show on the channel, so you can follow at your own pace. Guides are in Spanish.',
+			contSub: 'The steps, links and downloads I show on the channel, so you can follow at your own pace.',
 			soonTitulo: 'More guides coming',
 			soonSub: 'Every new video gets one',
 			soonTexto: 'I keep uploading tutorials to the channel. Subscribe to hear about them first.',
@@ -160,6 +173,18 @@ export const TEXTOS = {
 			redes: 'Social',
 		},
 		redes: { youtube: 'Tutorials and videos' },
+		articulo: {
+			volver: 'Back to home',
+			inicio: 'Home',
+			guias: 'Guides',
+			descarga: 'Download',
+			archivo: 'The file I use in the video',
+			descargar: 'Download',
+			sigueme: 'Follow me',
+			teSirvio: 'Did it help?',
+			proxima: 'Subscribe to catch the next guide.',
+		},
+		legal: { privacidad: 'Privacy' },
 	},
 } as const;
 

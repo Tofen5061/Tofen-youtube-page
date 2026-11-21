@@ -13,7 +13,7 @@ const { titulo, descripcion, imagen, url, etiqueta, verGuia = 'Ver guía' } = As
 
 <a href={url} class="card video">
 	<div class="miniatura">
-		<img src={imagen} alt="" loading="lazy" />
+		<img src={imagen} alt={titulo} loading="lazy" width="640" height="360" />
 	</div>
 	<div class="cuerpo">
 		<span class="tag">{etiqueta}</span>

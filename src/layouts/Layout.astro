@@ -3,13 +3,17 @@ import '@fontsource-variable/nunito';
 import '../styles/global.css';
 import Footer from '../components/Footer.astro';
 import Menu from '../components/Menu.astro';
-import { ADSENSE_CLIENTE } from '../data/sitio';
+import { ADSENSE_CLIENTE, SITIO } from '../data/sitio';
 import { idiomaDe, rutaEquivalente, textos } from '../i18n';
 
 interface Props {
 	title: string;
 	description?: string;
 	image?: string;
+	// 'article' en las guías; 'website' en el resto
+	tipo?: 'website' | 'article';
+	// Datos estructurados (schema.org) para Google
+	jsonld?: object | object[];
 }
 
 const idioma = idiomaDe(Astro.url);
@@ -17,13 +21,16 @@ const {
 	title,
 	description = textos(idioma).meta.descripcion,
 	image = '/AutoCad.png',
+	tipo = 'website',
+	jsonld,
 } = Astro.props;
-// Las guías solo existen en español, así que no anuncian versión en inglés
-const tieneTraduccion = !Astro.url.pathname.startsWith('/articles');
 
-const sitio = 'https://tofen-youtube-page.vercel.app';
-const urlPagina = new URL(Astro.url.pathname, sitio).href;
-const urlImagen = new URL(image, sitio).href;
+// URLs sin barra final, igual que en el sitemap
+const camino = Astro.url.pathname.replace(/\/$/, '') || '/';
+const urlPagina = new URL(camino, SITIO).href;
+const urlEs = new URL(rutaEquivalente(Astro.url, 'es'), SITIO).href;
+const urlEn = new URL(rutaEquivalente(Astro.url, 'en'), SITIO).href;
+const urlImagen = new URL(image, SITIO).href;
 // AdSense solo en la versión publicada, nunca en local
 const cargarAnuncios = import.meta.env.PROD;
 ---
@@ -36,12 +43,11 @@ const cargarAnuncios = import.meta.env.PROD;
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<link rel="canonical" href={urlPagina} />
-		{tieneTraduccion && (
-			<>
-				<link rel="alternate" hreflang="es" href={new URL(rutaEquivalente(Astro.url, 'es'), sitio).href} />
-				<link rel="alternate" hreflang="en" href={new URL(rutaEquivalente(Astro.url, 'en'), sitio).href} />
-			</>
-		)}
+		<link rel="alternate" hreflang="es" href={urlEs} />
+		<link rel="alternate" hreflang="en" href={urlEn} />
+		<link rel="alternate" hreflang="x-default" href={urlEs} />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		<meta name="robots" content="index, follow, max-image-preview:large" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" sizes="any" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -52,13 +58,19 @@ const cargarAnuncios = import.meta.env.PROD;
 				if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
 			} catch (e) {}
 		</script>
-		<meta property="og:type" content="website" />
+		<meta property="og:type" content={tipo} />
 		<meta property="og:site_name" content="Tofen" />
+		<meta property="og:locale" content={idioma === 'en' ? 'en_US' : 'es_NI'} />
+		<meta property="og:locale:alternate" content={idioma === 'en' ? 'es_NI' : 'en_US'} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={urlPagina} />
 		<meta property="og:image" content={urlImagen} />
 		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={urlImagen} />
+		{jsonld && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
 		<meta name="generator" content={Astro.generator} />
 		<meta name="google-adsense-account" content={ADSENSE_CLIENTE} />
 		{cargarAnuncios && (

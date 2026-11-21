@@ -38,7 +38,9 @@ const anio = new Date().getFullYear();
 			</div>
 		</div>
 
-		<p class="foot-bottom muted">© {anio} Tofen</p>
+		<p class="foot-bottom muted">
+			© {anio} Tofen · <a href={ruta(idioma, idioma === 'en' ? '/privacy' : '/privacidad')} class="legal">{t.legal.privacidad}</a>
+		</p>
 	</div>
 </footer>
 
@@ -110,6 +112,14 @@ const anio = new Date().getFullYear();
 	.foot-link:hover {
 		color: var(--orange-text);
 		text-decoration: none;
+	}
+
+	.legal {
+		color: var(--muted);
+	}
+
+	.legal:hover {
+		color: var(--orange-text);
 	}
 
 	.foot-bottom {
