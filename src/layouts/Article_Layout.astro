@@ -39,11 +39,11 @@ const resumen = description
 ---
 
 <Layout title={`${header} · Tofen`} description={resumen} image={banner_img[0]}>
-	<main class="contenedor articulo-pagina">
+	<main class="wrap articulo-pagina">
 		<a href="/" class="volver"><Icono nombre="atras" tam={14} /> Volver al inicio</a>
 
 		<div class="rejilla">
-			<article class="tarjeta articulo">
+			<article class="card articulo">
 				{banner_img.length > 0 && (
 					<div id="banner_container" class="banner">
 						{banner_img.map((src, index) => (
@@ -68,7 +68,7 @@ const resumen = description
 							<strong>Descarga</strong>
 							<small>El archivo que uso en el video</small>
 						</div>
-						<a href={download_link} class="btn btn-principal" target="_blank" rel="noopener">
+						<a href={download_link} class="btn btn-primary" target="_blank" rel="noopener">
 							<Icono nombre="descargar" />
 							Descargar
 						</a>
@@ -79,12 +79,12 @@ const resumen = description
 			</article>
 
 			<aside class="lateral">
-				<div class="tarjeta bloque">
+				<div class="card bloque">
 					<span class="bloque-titulo">Sígueme</span>
 					<Redes />
 				</div>
 
-				<a href={SUSCRIBIRSE} target="_blank" rel="noopener" class="tarjeta bloque aviso">
+				<a href={SUSCRIBIRSE} target="_blank" rel="noopener" class="card bloque aviso">
 					<span class="aviso-icono"><Icono nombre="play" tam={18} /></span>
 					<span class="aviso-texto">
 						<strong>¿Te sirvió?</strong>
@@ -102,7 +102,8 @@ const resumen = description
 
 <style>
 	.articulo-pagina {
-		padding-top: 24px;
+		padding-top: 28px;
+		padding-bottom: 72px;
 	}
 
 	.volver {
@@ -111,13 +112,14 @@ const resumen = description
 		gap: 6px;
 		font-size: 13px;
 		font-weight: 600;
-		color: var(--texto-2);
+		color: var(--muted);
 		text-decoration: none;
 		margin-bottom: 16px;
 	}
 
 	.volver:hover {
-		color: var(--texto);
+		color: var(--text);
+		text-decoration: none;
 	}
 
 	.rejilla {
@@ -135,8 +137,8 @@ const resumen = description
 	.banner {
 		position: relative;
 		aspect-ratio: 16 / 9;
-		background: var(--bg-sutil);
-		border-bottom: 1px solid var(--borde);
+		background: var(--bg-alt);
+		border-bottom: 1px solid var(--border);
 		overflow: hidden;
 	}
 
@@ -159,7 +161,7 @@ const resumen = description
 	}
 
 	.articulo-titulo {
-		font-size: clamp(22px, 2.6vw, 28px);
+		font-size: clamp(24px, 3vw, 32px);
 		font-weight: 800;
 		margin: 6px 0 20px;
 	}
@@ -171,9 +173,9 @@ const resumen = description
 		gap: 16px;
 		margin: 28px 0;
 		padding: 16px 20px;
-		border: 1px solid var(--durazno-borde);
-		background: var(--durazno);
-		border-radius: var(--radio-p);
+		border: 1px solid var(--peach-border);
+		background: var(--peach);
+		border-radius: var(--r-card);
 	}
 
 	.descarga-texto {
@@ -189,7 +191,7 @@ const resumen = description
 
 	.descarga-texto small {
 		font-size: 12px;
-		color: var(--texto-2);
+		color: var(--muted);
 	}
 
 	.lateral {
@@ -207,10 +209,10 @@ const resumen = description
 	.bloque-titulo {
 		display: block;
 		font-size: 11px;
-		font-weight: 700;
-		letter-spacing: 0.08em;
+		font-weight: 800;
+		letter-spacing: 0.12em;
 		text-transform: uppercase;
-		color: var(--texto-2);
+		color: var(--muted);
 		margin-bottom: 6px;
 	}
 
@@ -218,12 +220,13 @@ const resumen = description
 		display: flex;
 		align-items: center;
 		gap: 12px;
+		color: var(--text);
 		text-decoration: none;
 		transition: border-color 150ms;
 	}
 
 	.aviso:hover {
-		border-color: var(--durazno-borde);
+		border-color: var(--peach-border);
 	}
 
 	.aviso-icono {
@@ -232,8 +235,8 @@ const resumen = description
 		width: 36px;
 		height: 36px;
 		border-radius: 10px;
-		background: var(--durazno);
-		color: var(--naranja-texto);
+		background: var(--peach);
+		color: var(--orange-text);
 		flex: none;
 	}
 
@@ -249,7 +252,7 @@ const resumen = description
 
 	.aviso-texto small {
 		font-size: 12px;
-		color: var(--texto-2);
+		color: var(--muted);
 	}
 
 	@media (max-width: 900px) {
@@ -275,9 +278,9 @@ const resumen = description
 <!-- Estilos del texto que viene de Markdown (se generan fuera del componente) -->
 <style is:global>
 	.prosa {
-		font-size: 14px;
+		font-size: 15px;
 		line-height: 1.75;
-		color: var(--texto);
+		color: var(--text);
 	}
 
 	.prosa > * + * {
@@ -310,12 +313,12 @@ const resumen = description
 	}
 
 	.prosa li::marker {
-		color: var(--naranja-texto);
+		color: var(--orange-text);
 		font-weight: 700;
 	}
 
 	.prosa a {
-		color: var(--naranja-texto);
+		color: var(--orange-text);
 		font-weight: 700;
 	}
 </style>

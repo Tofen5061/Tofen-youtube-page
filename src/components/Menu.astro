@@ -4,104 +4,191 @@ import { SUSCRIBIRSE } from '../data/sitio';
 
 const ruta = Astro.url.pathname;
 const enlaces = [
-	{ texto: 'Inicio', url: '/', activo: ruta === '/' || ruta.startsWith('/articles') },
+	{ texto: 'Contenido', url: '/#contenido', activo: ruta.startsWith('/articles') },
+	{ texto: 'Temas', url: '/#temas', activo: false },
 	{ texto: 'Sobre mí', url: '/about', activo: ruta.startsWith('/about') },
 ];
 ---
 
-<header class="barra">
-	<div class="contenedor barra-interior">
-		<a href="/" class="logo" aria-label="Tofen, ir al inicio">
-			<picture>
-				<source srcset="/marca/tofen-logo-horizontal-fondo-oscuro.svg" media="(prefers-color-scheme: dark)" />
-				<img src="/marca/tofen-logo-horizontal-fondo-claro.svg" alt="Tofen" width="112" height="21" />
-			</picture>
+<header class="topbar">
+	<div class="wrap topbar-in">
+		<a href="/" class="brand" aria-label="Tofen, ir al inicio">
+			<img src="/marca/tofen-app-icon-oscuro.svg" alt="" width="28" height="28" />
+			Tofen
 		</a>
 
-		<nav class="enlaces" aria-label="Principal">
+		<nav class="topnav" aria-label="Principal">
 			{enlaces.map((e) => (
-				<a href={e.url} class:list={['enlace', { activo: e.activo }]} aria-current={e.activo ? 'page' : undefined}>
+				<a href={e.url} class:list={{ on: e.activo }} aria-current={e.activo ? 'page' : undefined}>
 					{e.texto}
 				</a>
 			))}
 		</nav>
 
-		<a href={SUSCRIBIRSE} class="btn btn-principal suscribirse" target="_blank" rel="noopener">
-			<Icono nombre="youtube" />
-			<span>Suscríbete</span>
-		</a>
+		<div class="acciones">
+			<button type="button" class="tema" id="cambiar-tema" aria-label="Cambiar a modo oscuro" title="Cambiar tema">
+				<span class="si-claro"><Icono nombre="luna" /></span>
+				<span class="si-oscuro"><Icono nombre="sol" /></span>
+			</button>
+			<a href={SUSCRIBIRSE} class="btn btn-yt btn-sm" target="_blank" rel="noopener">
+				<Icono nombre="youtube" />
+				<span class="txt">Suscríbete</span>
+			</a>
+		</div>
 	</div>
 </header>
 
 <style>
-	.barra {
+	.topbar {
 		position: sticky;
 		top: 0;
 		z-index: 10;
-		background: color-mix(in srgb, var(--card) 88%, transparent);
+		background: color-mix(in srgb, var(--bg) 85%, transparent);
 		backdrop-filter: saturate(1.4) blur(10px);
-		border-bottom: 1px solid var(--borde);
+		-webkit-backdrop-filter: saturate(1.4) blur(10px);
+		border-bottom: 1px solid var(--border);
 	}
 
-	.barra-interior {
+	.topbar-in {
 		display: flex;
 		align-items: center;
 		gap: 24px;
 		height: 60px;
 	}
 
-	.logo {
-		display: flex;
-		align-items: center;
-		margin-right: auto;
-	}
-
-	.logo img {
-		height: 21px;
-		width: auto;
-	}
-
-	.enlaces {
-		display: flex;
-		gap: 4px;
-	}
-
-	.enlace {
+	.brand {
 		display: inline-flex;
 		align-items: center;
-		height: 34px;
-		padding: 0 12px;
-		border-radius: 8px;
-		font-size: 13px;
-		font-weight: 600;
-		color: var(--texto-2);
+		gap: 10px;
+		color: var(--text);
+		font-weight: 800;
+		font-size: 16px;
+		letter-spacing: -0.01em;
+	}
+
+	.brand:hover {
 		text-decoration: none;
-		transition: background-color 150ms, color 150ms;
 	}
 
-	.enlace:hover {
-		background: var(--bg-sutil);
-		color: var(--texto);
+	.brand img {
+		border-radius: 7px;
 	}
 
-	.enlace.activo {
-		color: var(--texto);
-		font-weight: 700;
+	.topnav {
+		display: flex;
+		gap: 22px;
+		margin-left: auto;
 	}
 
-	@media (max-width: 560px) {
-		.barra-interior {
-			gap: 8px;
+	.topnav a {
+		color: var(--muted);
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	.topnav a:hover,
+	.topnav a.on {
+		color: var(--text);
+		text-decoration: none;
+	}
+
+	.acciones {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	/* Selector de tema: mismo alto que el botón de al lado */
+	.tema {
+		display: grid;
+		place-items: center;
+		width: 36px;
+		height: 36px;
+		border-radius: var(--r-ctl);
+		border: 1px solid var(--border);
+		background: var(--card);
+		color: var(--muted);
+		box-shadow: var(--shadow);
+		cursor: pointer;
+		transition: background-color 0.15s, color 0.15s;
+	}
+
+	.tema:hover {
+		background: var(--bg);
+		color: var(--text);
+	}
+
+	.tema span {
+		display: flex;
+	}
+
+	/* Se muestra la luna en claro y el sol en oscuro */
+	.si-oscuro {
+		display: none !important;
+	}
+
+	:global(:root[data-theme='dark']) .si-claro {
+		display: none !important;
+	}
+
+	:global(:root[data-theme='dark']) .si-oscuro {
+		display: flex !important;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:global(:root:not([data-theme='light'])) .si-claro {
+			display: none !important;
 		}
-		.enlace {
-			padding: 0 8px;
+		:global(:root:not([data-theme='light'])) .si-oscuro {
+			display: flex !important;
 		}
-		.suscribirse {
-			width: 38px;
+	}
+
+	@media (max-width: 640px) {
+		.topnav {
+			gap: 14px;
+		}
+		.topnav a:nth-child(2) {
+			display: none;
+		}
+		.topbar-in {
+			gap: 14px;
+		}
+		.btn-yt {
+			width: 36px;
 			padding: 0;
 		}
-		.suscribirse span {
+		.btn-yt .txt {
+			display: none;
+		}
+	}
+
+	@media (max-width: 400px) {
+		.topnav a:nth-child(1) {
 			display: none;
 		}
 	}
 </style>
+
+<script>
+	// Selector de tema: alterna claro/oscuro y lo recuerda en este navegador
+	const boton = document.getElementById('cambiar-tema');
+	const raiz = document.documentElement;
+	const sistemaOscuro = () => window.matchMedia('(prefers-color-scheme: dark)').matches;
+	const esOscuro = () => (raiz.dataset.theme ? raiz.dataset.theme === 'dark' : sistemaOscuro());
+
+	function actualizarEtiqueta() {
+		boton?.setAttribute('aria-label', esOscuro() ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+	}
+
+	boton?.addEventListener('click', () => {
+		const nuevo = esOscuro() ? 'light' : 'dark';
+		raiz.dataset.theme = nuevo;
+		try {
+			localStorage.setItem('tema', nuevo);
+		} catch (e) {}
+		actualizarEtiqueta();
+	});
+
+	actualizarEtiqueta();
+</script>

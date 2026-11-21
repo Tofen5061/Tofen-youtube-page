@@ -29,7 +29,7 @@ import { REDES } from '../data/sitio';
 	}
 
 	.redes li + li {
-		border-top: 1px solid var(--borde);
+		border-top: 1px solid var(--border);
 	}
 
 	.red {
@@ -38,13 +38,14 @@ import { REDES } from '../data/sitio';
 		gap: 12px;
 		padding: 10px 8px;
 		margin: 2px -8px;
-		border-radius: var(--radio-c);
+		border-radius: var(--r-ctl);
+		color: var(--text);
 		text-decoration: none;
 		transition: background-color 150ms;
 	}
 
 	.red:hover {
-		background: var(--bg-sutil);
+		background: var(--bg-alt);
 	}
 
 	.red-icono {
@@ -53,8 +54,9 @@ import { REDES } from '../data/sitio';
 		width: 34px;
 		height: 34px;
 		border-radius: 9px;
-		background: var(--durazno);
-		color: var(--naranja-texto);
+		border: 1px solid var(--peach-border);
+		background: var(--peach);
+		color: var(--orange-text);
 		flex: none;
 	}
 
@@ -67,21 +69,21 @@ import { REDES } from '../data/sitio';
 	}
 
 	.red-texto strong {
-		font-size: 13px;
+		font-size: 14px;
 		font-weight: 700;
 	}
 
 	.red-texto small {
-		font-size: 12px;
-		color: var(--texto-2);
+		font-size: 13px;
+		color: var(--muted);
 	}
 
 	.red-flecha {
-		color: var(--texto-3);
+		color: var(--faint);
 		display: flex;
 	}
 
 	.red:hover .red-flecha {
-		color: var(--naranja-texto);
+		color: var(--orange-text);
 	}
 </style>

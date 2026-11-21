@@ -4,140 +4,564 @@ import Card from '../components/Card.astro';
 import Icono from '../components/Icono.astro';
 import Anuncio from '../components/Anuncio.astro';
 import { CONTENIDO, SUSCRIBIRSE } from '../data/sitio';
+
+const temas = [
+	{ icono: 'codigo', titulo: 'Programación', desc: 'Código explicado paso a paso' },
+	{ icono: 'regla', titulo: 'Programas', desc: 'AutoCAD y otras herramientas' },
+	{ icono: 'celular', titulo: 'Apps', desc: 'Apps útiles para el día a día' },
+	{ icono: 'monitor', titulo: 'Tecnología', desc: 'Trucos para tu PC' },
+	{ icono: 'control', titulo: 'Juegos', desc: 'De vez en cuando, algo de juego' },
+] as const;
+
+const [destacado, ...resto] = CONTENIDO;
 ---
 
 <Layout title="Tofen · Tutoriales de programación y tecnología">
 	<main>
-		<section class="contenedor portada">
-			<span class="eyebrow">Canal de YouTube</span>
-			<h1>Tutoriales de programación y tecnología</h1>
-			<p class="bajada">
-				Guías paso a paso, descargas y todo lo que aparece en los videos de Tofen, en un solo lugar.
-			</p>
-		</section>
+		<!-- Portada -->
+		<section class="hero">
+			<div class="wrap hero-in">
+				<div class="hero-copy">
+					<span class="eyebrow">Canal de YouTube · Hecho en Nicaragua</span>
+					<h1>Aprende programación y tecnología, <span class="accent">paso a paso</span></h1>
+					<p class="lead">
+						Tutoriales en español, claros y sin rodeos. Aquí encuentras la guía y las descargas de cada video del canal.
+					</p>
+					<div class="hero-cta">
+						<a href={SUSCRIBIRSE} class="btn btn-yt" target="_blank" rel="noopener">
+							<Icono nombre="youtube" />
+							Suscríbete en YouTube
+						</a>
+						<a href="#contenido" class="btn btn-ghost">Ver contenido <Icono nombre="flecha" /></a>
+					</div>
+					<ul class="hero-points">
+						<li><span class="ok"><Icono nombre="check" /></span> Tutoriales en español</li>
+						<li><span class="ok"><Icono nombre="check" /></span> Descargas incluidas</li>
+						<li><span class="ok"><Icono nombre="check" /></span> Gratis</li>
+					</ul>
+				</div>
 
-		<section class="contenedor" aria-labelledby="titulo-contenido">
-			<div class="encabezado">
-				<h2 id="titulo-contenido">Contenido</h2>
-				<span class="conteo">{CONTENIDO.length} publicados</span>
-			</div>
+				<!-- Maqueta: tarjeta de video del canal -->
+				<div class="hero-art" aria-hidden="true">
+					<div class="player">
+						<div class="player-thumb">
+							<img src={destacado.imagen} alt="" />
+							<span class="player-play"><Icono nombre="play" tam={22} trazo={1.5} /></span>
+						</div>
+						<div class="player-body">
+							<div class="player-head">
+								<img src="/marca/tofen-app-icon-oscuro.svg" alt="" width="32" height="32" class="player-avatar" />
+								<span class="two">
+									<b>{destacado.titulo}</b>
+									<small>Tofen · {destacado.etiqueta}</small>
+								</span>
+							</div>
+							<p class="player-section">Más del canal</p>
+							<div class="player-list">
+								{resto.slice(0, 2).map((c) => (
+									<div class="player-item">
+										<img src={c.imagen} alt="" class="player-mini" />
+										<span class="two">
+											<b>{c.titulo}</b>
+											<small>{c.etiqueta}</small>
+										</span>
+									</div>
+								))}
+								<div class="player-item">
+									<span class="player-mini vacio"><Icono nombre="mas" /></span>
+									<span class="two">
+										<b>Próximo video</b>
+										<small>En camino</small>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
 
-			<div class="rejilla">
-				{CONTENIDO.map((c) => <Card {...c} />)}
-
-				<div class="proximo">
-					<span class="proximo-icono"><Icono nombre="reloj" tam={18} /></span>
-					<strong>Nuevo contenido en camino</strong>
-					<p>Cada video nuevo del canal aparecerá aquí con su guía.</p>
-					<a href={SUSCRIBIRSE} target="_blank" rel="noopener" class="proximo-enlace">
-						Activa la campanita en YouTube <Icono nombre="flecha" tam={14} />
-					</a>
+					<div class="float-card fc-1">
+						<span class="fc-ic ic-green"><Icono nombre="campana" /></span>
+						<span class="two"><b>Video nuevo</b><small>Activa la campanita</small></span>
+					</div>
+					<div class="float-card fc-2">
+						<span class="fc-ic ic-peach"><Icono nombre="descargar" /></span>
+						<span class="two"><b>Descarga lista</b><small>Enlace en la guía</small></span>
+					</div>
 				</div>
 			</div>
+		</section>
 
-			<div class="anuncio-inicio">
-				<Anuncio />
+		<!-- Contenido -->
+		<section class="section section-alt" id="contenido">
+			<div class="wrap">
+				<div class="sec-head">
+					<span class="eyebrow">Contenido</span>
+					<h2>Las guías de cada video</h2>
+					<p class="sub">Los pasos, enlaces y descargas que muestro en el canal, para que los sigas a tu ritmo.</p>
+				</div>
+
+				<div class="grid">
+					{CONTENIDO.map((c) => <Card {...c} />)}
+
+					<div class="card card-soon">
+						<div class="soon-head">
+							<span class="ic-box soon-ic"><Icono nombre="mas" tam={18} /></span>
+							<span class="two">
+								<b>Vienen más guías</b>
+								<small>Cada video nuevo suma la suya</small>
+							</span>
+						</div>
+						<p class="soon-text">Sigo subiendo tutoriales al canal. Suscríbete para enterarte primero.</p>
+						<a href={SUSCRIBIRSE} target="_blank" rel="noopener" class="soon-link">
+							Ir al canal <Icono nombre="flecha" />
+						</a>
+					</div>
+				</div>
+
+				<div class="anuncio-inicio">
+					<Anuncio />
+				</div>
+			</div>
+		</section>
+
+		<!-- Temas -->
+		<section class="section" id="temas">
+			<div class="wrap">
+				<div class="sec-head">
+					<span class="eyebrow">Temas</span>
+					<h2>De qué trata el canal</h2>
+					<p class="sub">Sobre todo programación y tecnología, con algo de apps y juegos de vez en cuando.</p>
+				</div>
+				<ul class="who">
+					{temas.map((t) => (
+						<li>
+							<span class="ic-box"><Icono nombre={t.icono} tam={18} /></span>
+							<span class="two">
+								<b>{t.titulo}</b>
+								<small>{t.desc}</small>
+							</span>
+						</li>
+					))}
+				</ul>
+			</div>
+		</section>
+
+		<!-- Llamado final -->
+		<section class="section final">
+			<div class="wrap">
+				<div class="cta-end">
+					<div>
+						<h2>¿Te sirvió algún tutorial?</h2>
+						<p class="sub">Suscríbete y activa la campanita para no perderte el próximo.</p>
+					</div>
+					<a href={SUSCRIBIRSE} class="btn btn-yt" target="_blank" rel="noopener">
+						<Icono nombre="youtube" />
+						Suscríbete
+					</a>
+				</div>
 			</div>
 		</section>
 	</main>
 </Layout>
 
 <style>
-	.portada {
-		padding-top: 56px;
-		padding-bottom: 40px;
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-		max-width: var(--ancho);
+	/* Portada */
+	.hero {
+		padding: 64px 0 72px;
+		overflow: hidden;
 	}
 
-	.portada h1 {
-		font-size: clamp(26px, 4vw, 36px);
-		font-weight: 800;
-		max-width: 24ch;
-	}
-
-	.bajada {
-		font-size: 15px;
-		color: var(--texto-2);
-		max-width: 52ch;
-	}
-
-	.encabezado {
-		display: flex;
-		align-items: baseline;
-		justify-content: space-between;
-		margin-bottom: 16px;
-	}
-
-	.encabezado h2 {
-		font-size: 16px;
-		font-weight: 800;
-	}
-
-	.conteo {
-		font-size: 12px;
-		color: var(--texto-2);
-		font-variant-numeric: tabular-nums;
-	}
-
-	.rejilla {
+	.hero-in {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-		gap: 20px;
+		grid-template-columns: 1.1fr 0.9fr;
+		gap: 48px;
+		align-items: center;
 	}
 
-	.proximo {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		justify-content: center;
-		gap: 6px;
-		padding: 28px 24px;
-		border: 1px dashed var(--borde);
-		border-radius: var(--radio-p);
-		background: transparent;
-		min-height: 220px;
-	}
-
-	.proximo-icono {
-		display: grid;
-		place-items: center;
-		width: 36px;
-		height: 36px;
-		border-radius: 10px;
-		background: var(--durazno);
-		color: var(--naranja-texto);
-		margin-bottom: 6px;
-	}
-
-	.proximo strong {
-		font-size: 15px;
+	.hero h1 {
+		font-size: clamp(30px, 4.4vw, 46px);
 		font-weight: 800;
+		letter-spacing: -0.03em;
 	}
 
-	.proximo p {
-		font-size: 13px;
-		color: var(--texto-2);
+	.lead {
+		margin-top: 18px;
+		font-size: 17px;
+		color: var(--muted);
+		max-width: 34em;
 	}
 
-	.proximo-enlace {
+	.hero-cta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+		margin-top: 28px;
+	}
+
+	.hero-points {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px 20px;
+		margin: 22px 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.hero-points li {
 		display: inline-flex;
 		align-items: center;
 		gap: 6px;
-		margin-top: 8px;
 		font-size: 13px;
-		font-weight: 700;
-		color: var(--naranja-texto);
-		text-decoration: none;
+		font-weight: 600;
+		color: var(--muted);
 	}
 
-	.proximo-enlace:hover {
-		text-decoration: underline;
+	.ok {
+		display: flex;
+		color: var(--green);
+	}
+
+	/* Maqueta */
+	.hero-art {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		padding: 12px 0;
+	}
+
+	.player {
+		width: 340px;
+		background: var(--card);
+		border: 1px solid var(--border);
+		border-radius: 20px;
+		box-shadow: var(--shadow-float);
+		overflow: hidden;
+	}
+
+	.player-thumb {
+		position: relative;
+		aspect-ratio: 16 / 9;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.player-thumb img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.player-play {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		display: grid;
+		place-items: center;
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		background: #0E1016B3;
+		color: #fff;
+		backdrop-filter: blur(4px);
+	}
+
+	.player-body {
+		padding: 14px;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.player-head {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+
+	.player-avatar {
+		border-radius: 50%;
+		flex: none;
+	}
+
+	.player-head .two b {
+		font-size: 13px;
+		line-height: 1.3;
+	}
+
+	.player-head .two small {
+		font-size: 11.5px;
+	}
+
+	.player-section {
+		font-size: 10px;
+		font-weight: 800;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--muted);
+		margin: 6px 2px 0;
+	}
+
+	.player-list {
+		background: var(--bg);
+		border: 1px solid var(--border);
+		border-radius: 12px;
+		padding: 2px 10px;
+	}
+
+	.player-item {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 8px 0;
+	}
+
+	.player-item + .player-item {
+		border-top: 1px solid var(--border);
+	}
+
+	.player-item .two b {
+		font-size: 12.5px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.player-item .two small {
+		font-size: 11px;
+	}
+
+	.player-mini {
+		width: 52px;
+		height: 30px;
+		border-radius: 6px;
+		object-fit: cover;
+		flex: none;
+	}
+
+	.player-mini.vacio {
+		display: grid;
+		place-items: center;
+		border: 1px dashed var(--border);
+		color: var(--muted);
+		background: var(--card);
+	}
+
+	.float-card {
+		position: absolute;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		background: var(--card);
+		border: 1px solid var(--border);
+		border-radius: 12px;
+		padding: 10px 14px 10px 10px;
+		box-shadow: var(--shadow-float);
+	}
+
+	.float-card .two b {
+		font-size: 12.5px;
+	}
+
+	.float-card .two small {
+		font-size: 11.5px;
+	}
+
+	.fc-1 {
+		bottom: -4%;
+		left: -4%;
+	}
+
+	.fc-2 {
+		top: 12%;
+		right: -4%;
+	}
+
+	.fc-ic {
+		width: 32px;
+		height: 32px;
+		border-radius: 9px;
+		display: grid;
+		place-items: center;
+		flex: none;
+	}
+
+	.ic-green {
+		background: var(--green-bg);
+		color: var(--green);
+	}
+
+	.ic-peach {
+		background: var(--peach);
+		color: var(--orange-text);
+	}
+
+	/* Contenido */
+	.grid {
+		display: grid;
+		gap: 16px;
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.card-soon {
+		background: transparent;
+		border-style: dashed;
+		box-shadow: none;
+		display: flex;
+		flex-direction: column;
+		padding: 24px;
+	}
+
+	.soon-head {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		padding-bottom: 18px;
+		margin-bottom: 16px;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.soon-head .two b {
+		font-size: 17px;
+		font-weight: 800;
+	}
+
+	.soon-ic {
+		background: var(--card);
+		border-color: var(--border);
+		color: var(--muted);
+	}
+
+	.soon-text {
+		color: var(--muted);
+		font-size: 14px;
+	}
+
+	.soon-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		margin-top: auto;
+		padding-top: 16px;
+		font-weight: 700;
+		font-size: 14px;
 	}
 
 	.anuncio-inicio {
-		margin-top: 40px;
+		margin-top: 32px;
+	}
+
+	/* Temas */
+	.who {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		gap: 12px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.who li {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 16px;
+		background: var(--card);
+		border: 1px solid var(--border);
+		border-radius: var(--r-card);
+		box-shadow: var(--shadow);
+	}
+
+	/* Llamado final */
+	.final {
+		padding-top: 0;
+	}
+
+	.cta-end {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 24px;
+		flex-wrap: wrap;
+		padding: 32px;
+		background: var(--card);
+		border: 1px solid var(--border);
+		border-radius: 18px;
+		box-shadow: var(--shadow);
+	}
+
+	.cta-end h2 {
+		font-size: clamp(22px, 2.6vw, 28px);
+		font-weight: 800;
+	}
+
+	/* Tableta */
+	@media (max-width: 960px) {
+		.hero-in {
+			grid-template-columns: 1fr;
+			gap: 40px;
+		}
+		.hero-copy {
+			text-align: center;
+		}
+		.lead {
+			margin-left: auto;
+			margin-right: auto;
+		}
+		.hero-cta,
+		.hero-points {
+			justify-content: center;
+		}
+		.grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		.who {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	/* Celular */
+	@media (max-width: 640px) {
+		.hero {
+			padding: 40px 0 48px;
+		}
+		.lead {
+			font-size: 15.5px;
+		}
+		.hero-cta {
+			flex-direction: column;
+		}
+		.hero-cta .btn {
+			width: 100%;
+		}
+		.player {
+			width: 100%;
+			max-width: 320px;
+		}
+		.float-card {
+			display: none;
+		}
+		.grid {
+			grid-template-columns: 1fr;
+		}
+		.who {
+			grid-template-columns: 1fr 1fr;
+			gap: 10px;
+		}
+		.who li {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 10px;
+			padding: 14px;
+		}
+		.who li:last-child {
+			grid-column: span 2;
+			flex-direction: row;
+			align-items: center;
+		}
+		.cta-end {
+			padding: 24px 20px;
+			flex-direction: column;
+			align-items: stretch;
+			text-align: center;
+		}
 	}
 </style>

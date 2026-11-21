@@ -35,8 +35,13 @@ const cargarAnuncios = import.meta.env.PROD;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" sizes="any" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-		<meta name="theme-color" content="#F6F8FB" media="(prefers-color-scheme: light)" />
-		<meta name="theme-color" content="#0A0C11" media="(prefers-color-scheme: dark)" />
+		<!-- Aplica el tema elegido antes de pintar, así no parpadea -->
+		<script is:inline>
+			try {
+				const t = localStorage.getItem('tema');
+				if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+			} catch (e) {}
+		</script>
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content="Tofen" />
 		<meta property="og:title" content={title} />

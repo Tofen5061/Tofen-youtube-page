@@ -10,44 +10,39 @@ interface Props {
 const { titulo, descripcion, imagen, url, etiqueta } = Astro.props;
 ---
 
-<article class="tarjeta card">
-	<a href={url} class="card-enlace">
-		<div class="miniatura">
-			<img src={imagen} alt="" loading="lazy" />
-		</div>
-		<div class="card-cuerpo">
-			<span class="etiqueta">{etiqueta}</span>
-			<h2 class="card-titulo">{titulo}</h2>
-			<p class="card-desc">{descripcion}</p>
-			<span class="card-ver">Ver guía <Icono nombre="flecha" tam={14} /></span>
-		</div>
-	</a>
-</article>
+<a href={url} class="card video">
+	<div class="miniatura">
+		<img src={imagen} alt="" loading="lazy" />
+	</div>
+	<div class="cuerpo">
+		<span class="tag">{etiqueta}</span>
+		<span class="two">
+			<b>{titulo}</b>
+			<small>{descripcion}</small>
+		</span>
+		<span class="ver">Ver guía <Icono nombre="flecha" /></span>
+	</div>
+</a>
 
 <style>
-	.card {
-		overflow: hidden;
-		transition: border-color 150ms, box-shadow 150ms, transform 150ms;
-	}
-
-	.card:hover {
-		border-color: var(--durazno-borde);
-		box-shadow: var(--sombra-flot);
-		transform: translateY(-2px);
-	}
-
-	.card-enlace {
+	.video {
 		display: flex;
 		flex-direction: column;
-		height: 100%;
+		overflow: hidden;
+		color: var(--text);
+		transition: border-color 0.15s, box-shadow 0.15s;
+	}
+
+	.video:hover {
 		text-decoration: none;
-		color: inherit;
+		border-color: var(--peach-border);
+		box-shadow: var(--shadow-float);
 	}
 
 	.miniatura {
 		aspect-ratio: 16 / 9;
-		background: var(--bg-sutil);
-		border-bottom: 1px solid var(--borde);
+		background: var(--bg-alt);
+		border-bottom: 1px solid var(--border);
 		overflow: hidden;
 	}
 
@@ -57,34 +52,34 @@ const { titulo, descripcion, imagen, url, etiqueta } = Astro.props;
 		object-fit: cover;
 	}
 
-	.card-cuerpo {
+	.cuerpo {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 6px;
-		padding: 16px 20px 20px;
+		gap: 12px;
+		padding: 20px 24px 22px;
 		flex: 1;
 	}
 
-	.card-titulo {
-		font-size: 15px;
+	.two b {
+		font-size: 17px;
 		font-weight: 800;
+		letter-spacing: -0.01em;
+		line-height: 1.3;
+	}
+
+	.two small {
 		margin-top: 4px;
+		font-size: 14px;
 	}
 
-	.card-desc {
-		font-size: 13px;
-		color: var(--texto-2);
-	}
-
-	.card-ver {
+	.ver {
 		display: inline-flex;
 		align-items: center;
 		gap: 6px;
 		margin-top: auto;
-		padding-top: 10px;
-		font-size: 13px;
+		font-size: 14px;
 		font-weight: 700;
-		color: var(--naranja-texto);
+		color: var(--orange-text);
 	}
 </style>

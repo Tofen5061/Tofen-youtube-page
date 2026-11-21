@@ -9,8 +9,8 @@ import { SUSCRIBIRSE } from '../../data/sitio';
 	title="Sobre mí · Tofen"
 	description="Soy Kevin Richtofen (Tofen), de Nicaragua. Hago tutoriales de programación y tecnología en YouTube."
 >
-	<main class="contenedor sobre">
-		<section class="tarjeta perfil">
+	<main class="wrap sobre">
+		<section class="card perfil">
 			<img src="/marca/tofen-avatar.svg" alt="" class="avatar" width="72" height="72" />
 			<span class="eyebrow">Sobre mí</span>
 			<h1>Kevin Richtofen</h1>
@@ -26,13 +26,13 @@ import { SUSCRIBIRSE } from '../../data/sitio';
 				temas.
 			</p>
 
-			<a href={SUSCRIBIRSE} target="_blank" rel="noopener" class="btn btn-principal">
+			<a href={SUSCRIBIRSE} target="_blank" rel="noopener" class="btn btn-yt">
 				<Icono nombre="youtube" />
 				Suscríbete al canal
 			</a>
 		</section>
 
-		<section class="tarjeta redes-tarjeta">
+		<section class="card redes-tarjeta">
 			<span class="bloque-titulo">Redes sociales</span>
 			<Redes />
 		</section>
@@ -42,7 +42,8 @@ import { SUSCRIBIRSE } from '../../data/sitio';
 <style>
 	.sobre {
 		max-width: 560px;
-		padding-top: 48px;
+		padding-top: 56px;
+		padding-bottom: 72px;
 		display: flex;
 		flex-direction: column;
 		gap: 16px;
@@ -64,14 +65,14 @@ import { SUSCRIBIRSE } from '../../data/sitio';
 	}
 
 	.perfil h1 {
-		font-size: 24px;
+		font-size: 28px;
 		font-weight: 800;
 		margin-top: 4px;
 	}
 
 	.alias {
 		font-size: 13px;
-		color: var(--texto-2);
+		color: var(--muted);
 	}
 
 	.datos {
@@ -93,12 +94,12 @@ import { SUSCRIBIRSE } from '../../data/sitio';
 	}
 
 	.datos :global(svg) {
-		color: var(--naranja-texto);
+		color: var(--orange-text);
 	}
 
 	.bio {
-		font-size: 14px;
-		color: var(--texto-2);
+		font-size: 15px;
+		color: var(--muted);
 		max-width: 42ch;
 		margin: 16px 0 24px;
 	}
@@ -110,10 +111,10 @@ import { SUSCRIBIRSE } from '../../data/sitio';
 	.bloque-titulo {
 		display: block;
 		font-size: 11px;
-		font-weight: 700;
-		letter-spacing: 0.08em;
+		font-weight: 800;
+		letter-spacing: 0.12em;
 		text-transform: uppercase;
-		color: var(--texto-2);
+		color: var(--muted);
 		margin-bottom: 6px;
 	}
 </style>

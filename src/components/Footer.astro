@@ -4,70 +4,119 @@ import { REDES } from '../data/sitio';
 const anio = new Date().getFullYear();
 ---
 
-<footer class="pie">
-	<div class="contenedor pie-interior">
-		<div class="marca">
-			<img src="/favicon.svg" alt="" width="18" height="18" />
-			<span>© {anio} Tofen · Hecho en Nicaragua</span>
+<footer class="footer">
+	<div class="wrap">
+		<div class="footer-in">
+			<div class="footer-brand">
+				<a href="/" class="brand">
+					<img src="/marca/tofen-app-icon-oscuro.svg" alt="" width="28" height="28" />
+					Tofen
+				</a>
+				<p class="muted">Tutoriales de programación y tecnología.<br />Hecho en Nicaragua.</p>
+			</div>
+
+			<div class="footer-cols">
+				<div>
+					<p class="foot-title">Sitio</p>
+					<a href="/#contenido" class="foot-link">Contenido</a>
+					<a href="/#temas" class="foot-link">Temas</a>
+					<a href="/about" class="foot-link">Sobre mí</a>
+				</div>
+				<div>
+					<p class="foot-title">Redes</p>
+					{REDES.map((r) => (
+						<a href={r.url} target="_blank" rel="noopener" class="foot-link">
+							<Icono nombre={r.red} />
+							{r.nombre}
+						</a>
+					))}
+				</div>
+			</div>
 		</div>
-		<ul class="redes">
-			{REDES.map((r) => (
-				<li>
-					<a href={r.url} target="_blank" rel="noopener" aria-label={r.nombre} title={r.nombre}>
-						<Icono nombre={r.red} />
-					</a>
-				</li>
-			))}
-		</ul>
+
+		<p class="foot-bottom muted">© {anio} Tofen</p>
 	</div>
 </footer>
 
 <style>
-	.pie {
-		margin-top: 64px;
-		border-top: 1px solid var(--borde);
-		background: var(--card);
+	.footer {
+		margin-top: 0;
+		border-top: 1px solid var(--border);
+		background: var(--bg-alt);
+		padding: 48px 0 24px;
 	}
 
-	.pie-interior {
+	.footer-in {
 		display: flex;
-		align-items: center;
 		justify-content: space-between;
-		gap: 16px;
-		min-height: 64px;
+		gap: 32px;
 		flex-wrap: wrap;
-		padding-top: 12px;
-		padding-bottom: 12px;
 	}
 
-	.marca {
+	.brand {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		color: var(--text);
+		font-weight: 800;
+		font-size: 16px;
+	}
+
+	.brand:hover {
+		text-decoration: none;
+	}
+
+	.brand img {
+		border-radius: 7px;
+	}
+
+	.footer-brand .muted {
+		margin-top: 8px;
+	}
+
+	.footer-cols {
+		display: flex;
+		gap: 56px;
+		flex-wrap: wrap;
+	}
+
+	.foot-title {
+		font-size: 11px;
+		font-weight: 800;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--muted);
+		margin-bottom: 10px;
+	}
+
+	.foot-link {
 		display: flex;
 		align-items: center;
 		gap: 8px;
-		font-size: 12px;
-		color: var(--texto-2);
+		color: var(--text);
+		font-size: 14px;
+		font-weight: 600;
+		padding: 4px 0;
 	}
 
-	.redes {
-		display: flex;
-		gap: 4px;
-		list-style: none;
-		margin: 0;
-		padding: 0;
+	.foot-link :global(svg) {
+		color: var(--muted);
 	}
 
-	.redes a {
-		display: grid;
-		place-items: center;
-		width: 34px;
-		height: 34px;
-		border-radius: 8px;
-		color: var(--texto-2);
-		transition: background-color 150ms, color 150ms;
+	.foot-link:hover {
+		color: var(--orange-text);
+		text-decoration: none;
 	}
 
-	.redes a:hover {
-		background: var(--bg-sutil);
-		color: var(--naranja-texto);
+	.foot-bottom {
+		margin-top: 32px;
+		padding-top: 20px;
+		border-top: 1px solid var(--border);
+	}
+
+	@media (max-width: 640px) {
+		.footer-cols {
+			gap: 32px;
+		}
 	}
 </style>
