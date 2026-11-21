@@ -1,63 +1,90 @@
 ---
-interface Props {
-	title: string;
-}
-
-const { title } = Astro.props;
+import '@fontsource-variable/nunito';
+import '../styles/global.css';
 import Footer from '../components/Footer.astro';
 import Menu from '../components/Menu.astro';
-import '@fontsource-variable/league-spartan';
+import { ADSENSE_CLIENTE, SITIO } from '../data/sitio';
+import { idiomaDe, rutaEquivalente, textos } from '../i18n';
+
+interface Props {
+	title: string;
+	description?: string;
+	image?: string;
+	// 'article' en las guías; 'website' en el resto
+	tipo?: 'website' | 'article';
+	// Datos estructurados (schema.org) para Google
+	jsonld?: object | object[];
+}
+
+const idioma = idiomaDe(Astro.url);
+const {
+	title,
+	description = textos(idioma).meta.descripcion,
+	image = '/AutoCad.png',
+	tipo = 'website',
+	jsonld,
+} = Astro.props;
+
+// URLs sin barra final, igual que en el sitemap
+const camino = Astro.url.pathname.replace(/\/$/, '') || '/';
+const urlPagina = new URL(camino, SITIO).href;
+const urlEs = new URL(rutaEquivalente(Astro.url, 'es'), SITIO).href;
+const urlEn = new URL(rutaEquivalente(Astro.url, 'en'), SITIO).href;
+const urlImagen = new URL(image, SITIO).href;
+// AdSense solo en la versión publicada, nunca en local
+const cargarAnuncios = import.meta.env.PROD;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={idioma}>
 	<head>
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="google-adsense-account" content="ca-pub-6818329352848462">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>{title}</title>
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6818329352848462"
-     crossorigin="anonymous"></script>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={urlPagina} />
+		<link rel="alternate" hreflang="es" href={urlEs} />
+		<link rel="alternate" hreflang="en" href={urlEn} />
+		<link rel="alternate" hreflang="x-default" href={urlEs} />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		<meta name="robots" content="index, follow, max-image-preview:large" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<!-- Aplica el tema elegido antes de pintar, así no parpadea -->
+		<script is:inline>
+			try {
+				const t = localStorage.getItem('tema');
+				if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+			} catch (e) {}
+		</script>
+		<meta property="og:type" content={tipo} />
+		<meta property="og:site_name" content="Tofen" />
+		<meta property="og:locale" content={idioma === 'en' ? 'en_US' : 'es_NI'} />
+		<meta property="og:locale:alternate" content={idioma === 'en' ? 'es_NI' : 'en_US'} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={urlPagina} />
+		<meta property="og:image" content={urlImagen} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={urlImagen} />
+		{jsonld && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
+		<meta name="generator" content={Astro.generator} />
+		<meta name="google-adsense-account" content={ADSENSE_CLIENTE} />
+		{cargarAnuncios && (
+			<script
+				is:inline
+				async
+				src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENTE}`}
+				crossorigin="anonymous"
+			></script>
+		)}
 	</head>
 	<body>
-        <Menu />
+		<Menu />
 		<slot />
-        <Footer />
+		<Footer />
 	</body>
 </html>
-<style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
-	html {
-        font-family: 'League Spartan Variable', sans-serif;
-		background: #ffffff;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
-
-	body{
-		height: 100%;
-		width: 100%;
-	}
-</style>

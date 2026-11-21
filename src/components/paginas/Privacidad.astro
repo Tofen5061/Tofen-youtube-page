@@ -1,0 +1,136 @@
+---
+// Política de privacidad (la pide AdSense). Compartida por /privacidad y /en/privacy.
+import Layout from '../../layouts/Layout.astro';
+import { REDES } from '../../data/sitio';
+import { idiomaDe } from '../../i18n';
+
+const idioma = idiomaDe(Astro.url);
+const es = idioma === 'es';
+const actualizada = es ? '21 de noviembre de 2026' : 'November 21, 2026';
+---
+
+<Layout
+	title={es ? 'Privacidad · Tofen' : 'Privacy · Tofen'}
+	description={es
+		? 'Cómo usa este sitio las cookies y los anuncios de Google AdSense.'
+		: 'How this site uses cookies and Google AdSense ads.'}
+>
+	<main class="wrap legal">
+		<span class="eyebrow">{es ? 'Legal' : 'Legal'}</span>
+		<h1>{es ? 'Política de privacidad' : 'Privacy policy'}</h1>
+		<p class="muted">{es ? `Última actualización: ${actualizada}` : `Last updated: ${actualizada}`}</p>
+
+		<div class="card cuerpo">
+			{es ? (
+				<>
+					<h2>Qué datos se recogen</h2>
+					<p>
+						Este sitio no tiene formularios ni cuentas, así que no te pido datos personales. Solo se guarda en tu
+						navegador el tema que elijas (claro u oscuro).
+					</p>
+					<h2>Publicidad y cookies</h2>
+					<p>
+						Uso Google AdSense para mostrar anuncios. Google y sus socios usan cookies para mostrar anuncios según tus
+						visitas a este y otros sitios web.
+					</p>
+					<p>
+						Puedes desactivar los anuncios personalizados en la
+						<a href="https://adssettings.google.com" target="_blank" rel="noopener">Configuración de anuncios de Google</a>. Para saber más, mira
+						<a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">
+							cómo usa Google los datos de los sitios que usan sus servicios
+						</a>.
+					</p>
+					<h2>Enlaces a otros sitios</h2>
+					<p>
+						Las guías enlazan a descargas y a otras páginas. Esos sitios tienen sus propias políticas de privacidad.
+					</p>
+					<h2>Contacto</h2>
+					<p>Si tienes dudas, escríbeme por mis redes:</p>
+				</>
+			) : (
+				<>
+					<h2>What data is collected</h2>
+					<p>
+						This site has no forms or accounts, so I don't ask for any personal data. Only the theme you pick (light or
+						dark) is saved in your browser.
+					</p>
+					<h2>Ads and cookies</h2>
+					<p>
+						I use Google AdSense to show ads. Google and its partners use cookies to serve ads based on your visits to
+						this and other websites.
+					</p>
+					<p>
+						You can turn off personalized ads in
+						<a href="https://adssettings.google.com" target="_blank" rel="noopener">Google Ad Settings</a>. To learn
+						more, see
+						<a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">
+							how Google uses data from sites that use its services
+						</a>.
+					</p>
+					<h2>Links to other sites</h2>
+					<p>The guides link to downloads and other pages. Those sites have their own privacy policies.</p>
+					<h2>Contact</h2>
+					<p>If you have questions, reach me on social media:</p>
+				</>
+			)}
+			<ul class="contacto">
+				{REDES.map((r) => (
+					<li><a href={r.url} target="_blank" rel="noopener">{r.nombre}</a></li>
+				))}
+			</ul>
+		</div>
+	</main>
+</Layout>
+
+<style>
+	.legal {
+		max-width: 760px;
+		padding-top: 56px;
+		padding-bottom: 72px;
+	}
+
+	.legal h1 {
+		font-size: clamp(26px, 3.4vw, 34px);
+		font-weight: 800;
+		margin-bottom: 6px;
+	}
+
+	.cuerpo {
+		margin-top: 24px;
+		padding: 28px 32px;
+		font-size: 15px;
+		line-height: 1.7;
+	}
+
+	.cuerpo h2 {
+		font-size: 17px;
+		font-weight: 800;
+		margin: 24px 0 8px;
+	}
+
+	.cuerpo h2:first-child {
+		margin-top: 0;
+	}
+
+	.cuerpo p + p {
+		margin-top: 10px;
+	}
+
+	.cuerpo a {
+		font-weight: 700;
+	}
+
+	.contacto {
+		display: flex;
+		gap: 16px;
+		margin: 10px 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	@media (max-width: 640px) {
+		.cuerpo {
+			padding: 20px 18px;
+		}
+	}
+</style>

@@ -1,9 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 128 128">
-    <path d="M50.4 78.5a75.1 75.1 0 0 0-28.5 6.9l24.2-65.7c.7-2 1.9-3.2 3.4-3.2h29c1.5 0 2.7 1.2 3.4 3.2l24.2 65.7s-11.6-7-28.5-7L67 45.5c-.4-1.7-1.6-2.8-2.9-2.8-1.3 0-2.5 1.1-2.9 2.7L50.4 78.5Zm-1.1 28.2Zm-4.2-20.2c-2 6.6-.6 15.8 4.2 20.2a17.5 17.5 0 0 1 .2-.7 5.5 5.5 0 0 1 5.7-4.5c2.8.1 4.3 1.5 4.7 4.7.2 1.1.2 2.3.2 3.5v.4c0 2.7.7 5.2 2.2 7.4a13 13 0 0 0 5.7 4.9v-.3l-.2-.3c-1.8-5.6-.5-9.5 4.4-12.8l1.5-1a73 73 0 0 0 3.2-2.2 16 16 0 0 0 6.8-11.4c.3-2 .1-4-.6-6l-.8.6-1.6 1a37 37 0 0 1-22.4 2.7c-5-.7-9.7-2-13.2-6.2Z" />
-    <style>
-        path { fill: #000; }
-        @media (prefers-color-scheme: dark) {
-            path { fill: #FFF; }
-        }
-    </style>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-16 -97 845 845" role="img" aria-label="Tofen">
+  <title>Tofen</title>
+  <defs>
+    <linearGradient id="sello-b" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="813" y2="130"><stop offset="0" stop-color="#FDA022"/><stop offset="1" stop-color="#FB8412"/></linearGradient>
+    <linearGradient id="sello-t" gradientUnits="userSpaceOnUse" x1="400" y1="130" x2="240" y2="651"><stop offset="0" stop-color="#FB8214"/><stop offset="1" stop-color="#F86F0E"/></linearGradient>
+    <linearGradient id="sello-m" gradientUnits="userSpaceOnUse" x1="357" y1="358" x2="697" y2="240"><stop offset="0" stop-color="#EA580C"/><stop offset="1" stop-color="#F5640E"/></linearGradient>
+    <linearGradient id="sello-p" gradientUnits="userSpaceOnUse" x1="467" y1="420" x2="250" y2="651"><stop offset="0" stop-color="#EE580A"/><stop offset="1" stop-color="#DC4605"/></linearGradient>
+  </defs>
+  <path fill="#F97316" d="M115 0 L813 0 L685 130 L0 130 Z M366 130 L436 130 L352 362 L235 651 L238 262 Z M475 238 L700 238 L580 360 L352 360 Z M352 358 L467 460 L235 651 L340 392 Z"/>
+  <polygon fill="url(#sello-b)" points="115,0 813,0 685,130 0,130"/>
+  <polygon fill="url(#sello-t)" points="366,130 436,130 352,362 235,651 238,262"/>
+  <polygon fill="url(#sello-m)" points="475,238 700,238 580,360 352,360"/>
+  <polygon fill="url(#sello-p)" points="352,358 467,460 235,651 340,392"/>
 </svg>

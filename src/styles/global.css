@@ -1,0 +1,327 @@
+/* Web del canal Tofen · mismo lenguaje visual que la landing de Tofen ERP.
+   Neutros fríos, naranja en dosis pequeñas y rojo YouTube solo para suscribirse. */
+
+:root {
+	--bg: #F6F8FB;
+	--bg-alt: #EEF1F6;
+	--card: #FFFFFF;
+	--border: #E3E7EE;
+	--text: #0E1016;
+	--muted: #6B7280;
+	--faint: #9AA1AD;
+
+	--orange: #FE853A;
+	--orange-press: #EE7426;
+	--orange-text: #B8531A;
+	--peach: #FFF3EC;
+	--peach-border: #FFE4D3;
+
+	--green-bg: #E9F9F0;
+	--green: #157F45;
+
+	/* Rojo YouTube: solo para el botón de suscribirse */
+	--yt: #FF0033;
+	--yt-press: #E0002D;
+
+	--shadow: 0 1px 2px #0F12190D;
+	--shadow-float: 0 12px 32px #0F12191A, 0 2px 6px #0F12190D;
+	--ring: 0 0 0 3px #FE853A40;
+
+	--r-ctl: 10px;
+	--r-card: 14px;
+	color-scheme: light;
+}
+
+/* Modo oscuro: sigue al sistema, salvo que la persona elija otro en el selector */
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) {
+		/* Grafito neutro (los grises del kit TofenMarca), sin el tono azulado */
+		--bg: #0C0C0E;
+		--bg-alt: #121214;
+		--card: #18181B;
+		--border: #2A2A2F;
+		--text: #FAFAFA;
+		--muted: #A1A1AA;
+		--faint: #71717A;
+		/* Naranja vivo, como en Tofen ERP */
+		--orange: #FF7A1F;
+		--orange-press: #FF8F3D;
+		--orange-text: #FF9A4D;
+		--peach: #FF7A1F1F;
+		--peach-border: #FF7A1F59;
+		--green-bg: #4ADE801A;
+		--green: #4ADE80;
+		--shadow: 0 1px 2px #00000059;
+		--shadow-float: 0 12px 32px #00000080, 0 2px 6px #00000059;
+		--ring: 0 0 0 3px #FF7A1F66;
+		color-scheme: dark;
+	}
+}
+
+:root[data-theme='dark'] {
+	/* Grafito neutro (los grises del kit TofenMarca), sin el tono azulado */
+	--bg: #0C0C0E;
+	--bg-alt: #121214;
+	--card: #18181B;
+	--border: #2A2A2F;
+	--text: #FAFAFA;
+	--muted: #A1A1AA;
+	--faint: #71717A;
+	/* Naranja vivo, como en Tofen ERP */
+	--orange: #FF7A1F;
+	--orange-press: #FF8F3D;
+	--orange-text: #FF9A4D;
+	--peach: #FF7A1F1F;
+	--peach-border: #FF7A1F59;
+	--green-bg: #4ADE801A;
+	--green: #4ADE80;
+	--shadow: 0 1px 2px #00000059;
+	--shadow-float: 0 12px 32px #00000080, 0 2px 6px #00000059;
+	--ring: 0 0 0 3px #FF7A1F66;
+	color-scheme: dark;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background: var(--bg);
+	color: var(--text);
+	font-family: 'Nunito Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+	font-size: 15px;
+	line-height: 1.55;
+	-webkit-font-smoothing: antialiased;
+	transition: background-color 0.15s;
+}
+
+body > main {
+	flex: 1;
+}
+
+img {
+	display: block;
+	max-width: 100%;
+}
+
+a {
+	color: var(--orange-text);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus-visible,
+button:focus-visible {
+	outline: none;
+	box-shadow: var(--ring);
+	border-radius: 8px;
+}
+
+h1,
+h2,
+h3 {
+	margin: 0;
+	letter-spacing: -0.02em;
+	line-height: 1.15;
+}
+
+p {
+	margin: 0;
+}
+
+.wrap {
+	width: 100%;
+	max-width: 1120px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+.eyebrow {
+	display: block;
+	font-size: 11px;
+	font-weight: 800;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--orange-text);
+	margin-bottom: 10px;
+}
+
+.muted {
+	color: var(--muted);
+	font-size: 13px;
+}
+
+.accent {
+	color: var(--orange-text);
+}
+
+/* Patrón de dos líneas: dato en negrita + subtexto gris */
+.two {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.two b {
+	font-weight: 700;
+	font-size: 14px;
+}
+
+.two small {
+	color: var(--muted);
+	font-size: 13px;
+	line-height: 1.45;
+}
+
+/* Botones */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	height: 46px;
+	padding: 0 20px;
+	border-radius: var(--r-ctl);
+	font: inherit;
+	font-weight: 700;
+	font-size: 15px;
+	white-space: nowrap;
+	border: 1px solid transparent;
+	cursor: pointer;
+	transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.btn:hover {
+	text-decoration: none;
+}
+
+.btn-primary {
+	background: var(--orange);
+	color: #fff;
+}
+
+.btn-primary:hover {
+	background: var(--orange-press);
+}
+
+.btn-yt {
+	background: var(--yt);
+	color: #fff;
+}
+
+.btn-yt:hover {
+	background: var(--yt-press);
+}
+
+.btn-ghost {
+	background: var(--card);
+	color: var(--text);
+	border-color: var(--border);
+	box-shadow: var(--shadow);
+}
+
+.btn-ghost:hover {
+	background: var(--bg);
+}
+
+.btn-sm {
+	height: 36px;
+	padding: 0 14px;
+	font-size: 13px;
+}
+
+/* Secciones */
+.section {
+	padding: 80px 0;
+	scroll-margin-top: 60px;
+}
+
+.section-alt {
+	background: var(--bg-alt);
+	border-top: 1px solid var(--border);
+	border-bottom: 1px solid var(--border);
+}
+
+.sec-head {
+	margin-bottom: 36px;
+	max-width: 40em;
+}
+
+.sec-head h2 {
+	font-size: clamp(24px, 3vw, 32px);
+	font-weight: 800;
+}
+
+.sub {
+	margin-top: 10px;
+	color: var(--muted);
+	font-size: 15px;
+}
+
+.card {
+	background: var(--card);
+	border: 1px solid var(--border);
+	border-radius: var(--r-card);
+	box-shadow: var(--shadow);
+}
+
+/* Recuadro durazno para íconos */
+.ic-box {
+	width: 38px;
+	height: 38px;
+	border-radius: 10px;
+	display: grid;
+	place-items: center;
+	flex: none;
+	background: var(--peach);
+	border: 1px solid var(--peach-border);
+	color: var(--orange-text);
+}
+
+.tag {
+	display: inline-block;
+	font-size: 11px;
+	font-weight: 800;
+	letter-spacing: 0.04em;
+	padding: 3px 10px;
+	border-radius: 999px;
+	background: var(--peach);
+	color: var(--orange-text);
+	border: 1px solid var(--peach-border);
+}
+
+@media (max-width: 640px) {
+	body {
+		font-size: 14px;
+	}
+	.wrap {
+		padding: 0 16px;
+	}
+	.section {
+		padding: 56px 0;
+	}
+	.sec-head {
+		margin-bottom: 24px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+	* {
+		transition: none !important;
+	}
+}

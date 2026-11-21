@@ -1,75 +1,273 @@
+---
+import Icono from './Icono.astro';
+import { SUSCRIBIRSE } from '../data/sitio';
+import { idiomaDe, ruta, rutaEquivalente, textos } from '../i18n';
 
+const idioma = idiomaDe(Astro.url);
+const t = textos(idioma).menu;
+const camino = Astro.url.pathname;
+const inicio = ruta(idioma, '/');
+const enlaces = [
+	{ texto: t.contenido, url: `${inicio}#contenido`, activo: camino.startsWith('/articles') },
+	{ texto: t.temas, url: `${inicio}#temas`, activo: false },
+	{ texto: t.sobre, url: ruta(idioma, '/about'), activo: /\/about/.test(camino) },
+];
+const idiomas = [
+	{ codigo: 'es', texto: 'ES', nombre: 'Español', url: rutaEquivalente(Astro.url, 'es') },
+	{ codigo: 'en', texto: 'EN', nombre: 'English', url: rutaEquivalente(Astro.url, 'en') },
+] as const;
+---
 
-<main class="mainMenu">
+<header class="topbar">
+	<div class="wrap topbar-in">
+		<a href={inicio} class="brand" aria-label={t.irInicio}>
+			<img src="/marca/tofen-app-icon-oscuro.svg" alt="" width="28" height="28" />
+			Tofen
+		</a>
 
-    <div class="menu">
-        <img class="tofenImg" src="https://i.pinimg.com/564x/f1/c2/ed/f1c2ed1000720bfcaeaa95d8bf917ddb.jpg" alt="Logo">
-        <h2 class="tofen" >Tofen</h2>
-        <a href="/">home</a>
-        <a class="about" href="/about">about</a>
-    </div>
-</main>
+		<nav class="topnav" aria-label="Principal">
+			{enlaces.map((e) => (
+				<a href={e.url} class:list={{ on: e.activo }} aria-current={e.activo ? 'page' : undefined}>
+					{e.texto}
+				</a>
+			))}
+		</nav>
+
+		<div class="acciones">
+			<!-- Selector de idioma -->
+			<div class="idiomas" role="group" aria-label={t.idioma}>
+				{idiomas.map((i) => (
+					<a
+						href={i.url}
+						hreflang={i.codigo}
+						lang={i.codigo}
+						title={i.nombre}
+						class:list={{ on: i.codigo === idioma }}
+						aria-current={i.codigo === idioma ? 'true' : undefined}
+					>
+						{i.texto}
+					</a>
+				))}
+			</div>
+			<button
+				type="button"
+				class="tema"
+				id="cambiar-tema"
+				aria-label={t.aOscuro}
+				title={t.tema}
+				data-a-oscuro={t.aOscuro}
+				data-a-claro={t.aClaro}
+			>
+				<span class="si-claro"><Icono nombre="luna" /></span>
+				<span class="si-oscuro"><Icono nombre="sol" /></span>
+			</button>
+			<a href={SUSCRIBIRSE} class="btn btn-yt btn-sm" target="_blank" rel="noopener">
+				<Icono nombre="youtube" />
+				<span class="txt">{t.suscribete}</span>
+			</a>
+		</div>
+	</div>
+</header>
 
 <style>
+	.topbar {
+		position: sticky;
+		top: 0;
+		z-index: 10;
+		background: color-mix(in srgb, var(--bg) 85%, transparent);
+		backdrop-filter: saturate(1.4) blur(10px);
+		-webkit-backdrop-filter: saturate(1.4) blur(10px);
+		border-bottom: 1px solid var(--border);
+	}
 
-    body{
-        padding: 0%;
-        margin: 0% ;
-    }
+	.topbar-in {
+		display: flex;
+		align-items: center;
+		gap: 24px;
+		height: 60px;
+	}
 
-    .mainMenu{
-        font-family: "League Spartan Variable", sans-serif;
-    }
+	.brand {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		color: var(--text);
+		font-weight: 800;
+		font-size: 16px;
+		letter-spacing: -0.01em;
+	}
 
-    .tofen {
-        margin-right: auto;
-        margin-left: -0.7em;
-    }
+	.brand:hover {
+		text-decoration: none;
+	}
 
-    .menu {
-        /*orden*/
-        display: flex;
-        justify-content:right;
-        align-items: center;
-        /*separacion y tamaño*/
-        gap: clamp(1rem, 2vw, 20rem);
-        width: 100%;
-        /*colores*/
-        background-color: rgb(0, 0, 0) ;
-        color: white;
-        /*configuraciones de letra*/
+	.brand img {
+		border-radius: 7px;
+	}
 
-    }
+	.topnav {
+		display: flex;
+		gap: 22px;
+		margin-left: auto;
+	}
 
-    .tofenImg {
-        width: 4rem;
-        height: 4rem;
-        margin-left: 2%;
-        padding: 0.5rem;
-        border-radius: 5rem;
-    }
+	.topnav a {
+		color: var(--muted);
+		font-size: 14px;
+		font-weight: 600;
+	}
 
-    a {
-        color: white;
-        text-decoration: none;
-        font-size: clamp(1.1rem, 3.5vw, 1.4rem);
-        font-weight: 700;
-    }
+	.topnav a:hover,
+	.topnav a.on {
+		color: var(--text);
+		text-decoration: none;
+	}
 
+	.acciones {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
 
-    .about {
-        margin-right: 2rem;
-    }
+	/* Selector de idioma: dos opciones en una píldora, lo elegido con tinte naranja */
+	.idiomas {
+		display: flex;
+		align-items: center;
+		height: 36px;
+		padding: 3px;
+		gap: 2px;
+		border: 1px solid var(--border);
+		border-radius: var(--r-ctl);
+		background: var(--card);
+		box-shadow: var(--shadow);
+	}
 
-    @media screen and (max-width: 700px) {
+	.idiomas a {
+		display: grid;
+		place-items: center;
+		height: 28px;
+		min-width: 32px;
+		padding: 0 6px;
+		border-radius: 7px;
+		font-size: 12px;
+		font-weight: 800;
+		letter-spacing: 0.04em;
+		color: var(--muted);
+		transition: background-color 0.15s, color 0.15s;
+	}
 
-      .contact{
-        margin-right: 1rem ;
-      }
+	.idiomas a:hover {
+		text-decoration: none;
+		color: var(--text);
+		background: var(--bg-alt);
+	}
 
-      .tofenImg {
-        width:3rem;
-        height: 3rem;
-      }
-    }
+	.idiomas a.on {
+		background: var(--peach);
+		color: var(--orange-text);
+	}
+
+	/* Selector de tema: mismo alto que el botón de al lado */
+	.tema {
+		display: grid;
+		place-items: center;
+		width: 36px;
+		height: 36px;
+		border-radius: var(--r-ctl);
+		border: 1px solid var(--border);
+		background: var(--card);
+		color: var(--muted);
+		box-shadow: var(--shadow);
+		cursor: pointer;
+		transition: background-color 0.15s, color 0.15s;
+	}
+
+	.tema:hover {
+		background: var(--bg-alt);
+		color: var(--orange-text);
+	}
+
+	.tema span {
+		display: flex;
+	}
+
+	/* Se muestra la luna en claro y el sol en oscuro */
+	.si-oscuro {
+		display: none !important;
+	}
+
+	:global(:root[data-theme='dark']) .si-claro {
+		display: none !important;
+	}
+
+	:global(:root[data-theme='dark']) .si-oscuro {
+		display: flex !important;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:global(:root:not([data-theme='light'])) .si-claro {
+			display: none !important;
+		}
+		:global(:root:not([data-theme='light'])) .si-oscuro {
+			display: flex !important;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.topnav {
+			gap: 14px;
+		}
+		.topnav a:nth-child(2) {
+			display: none;
+		}
+		.topbar-in {
+			gap: 14px;
+		}
+		.btn-yt {
+			width: 36px;
+			padding: 0;
+		}
+		.btn-yt .txt {
+			display: none;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.topnav a:nth-child(1) {
+			display: none;
+		}
+	}
+
+	@media (max-width: 380px) {
+		.topnav {
+			display: none;
+		}
+		.acciones {
+			margin-left: auto;
+		}
+	}
 </style>
+
+<script>
+	// Selector de tema: alterna claro/oscuro y lo recuerda en este navegador
+	const boton = document.getElementById('cambiar-tema');
+	const raiz = document.documentElement;
+	const sistemaOscuro = () => window.matchMedia('(prefers-color-scheme: dark)').matches;
+	const esOscuro = () => (raiz.dataset.theme ? raiz.dataset.theme === 'dark' : sistemaOscuro());
+
+	function actualizarEtiqueta() {
+		if (!boton) return;
+		boton.setAttribute('aria-label', esOscuro() ? boton.dataset.aClaro! : boton.dataset.aOscuro!);
+	}
+
+	boton?.addEventListener('click', () => {
+		const nuevo = esOscuro() ? 'light' : 'dark';
+		raiz.dataset.theme = nuevo;
+		try {
+			localStorage.setItem('tema', nuevo);
+		} catch (e) {}
+		actualizarEtiqueta();
+	});
+
+	actualizarEtiqueta();
+</script>

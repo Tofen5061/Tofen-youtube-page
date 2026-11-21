@@ -1,0 +1,91 @@
+---
+// Lista de redes con el patrón de dos líneas: nombre arriba, usuario abajo.
+import Icono from './Icono.astro';
+import { REDES } from '../data/sitio';
+import { idiomaDe, textos } from '../i18n';
+const t = textos(idiomaDe(Astro.url));
+---
+
+<ul class="redes">
+	{REDES.map((r) => (
+		<li>
+			<a href={r.url} target="_blank" rel="noopener" class="red">
+				<span class="red-icono">
+					<Icono nombre={r.red} />
+				</span>
+				<span class="red-texto">
+					<strong>{r.nombre}</strong>
+					<small>{r.usuario || t.redes.youtube}</small>
+				</span>
+				<span class="red-flecha"><Icono nombre="flecha" tam={14} /></span>
+			</a>
+		</li>
+	))}
+</ul>
+
+<style>
+	.redes {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.redes li + li {
+		border-top: 1px solid var(--border);
+	}
+
+	.red {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 10px 8px;
+		margin: 2px -8px;
+		border-radius: var(--r-ctl);
+		color: var(--text);
+		text-decoration: none;
+		transition: background-color 150ms;
+	}
+
+	.red:hover {
+		background: var(--peach);
+	}
+
+	.red-icono {
+		display: grid;
+		place-items: center;
+		width: 34px;
+		height: 34px;
+		border-radius: 9px;
+		border: 1px solid var(--peach-border);
+		background: var(--peach);
+		color: var(--orange-text);
+		flex: none;
+	}
+
+	.red-texto {
+		display: flex;
+		flex-direction: column;
+		line-height: 1.35;
+		flex: 1;
+		min-width: 0;
+	}
+
+	.red-texto strong {
+		font-size: 14px;
+		font-weight: 700;
+	}
+
+	.red-texto small {
+		font-size: 13px;
+		color: var(--muted);
+	}
+
+	.red-flecha {
+		color: var(--faint);
+		display: flex;
+	}
+
+	.red:hover .red-flecha {
+		color: var(--orange-text);
+	}
+</style>

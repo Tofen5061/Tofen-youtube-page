@@ -1,87 +1,136 @@
-<main class="footer">
+---
+import Icono from './Icono.astro';
+import { REDES } from '../data/sitio';
+import { idiomaDe, ruta, textos } from '../i18n';
+const idioma = idiomaDe(Astro.url);
+const t = textos(idioma);
+const inicio = ruta(idioma, '/');
+const anio = new Date().getFullYear();
+---
 
-     
+<footer class="footer">
+	<div class="wrap">
+		<div class="footer-in">
+			<div class="footer-brand">
+				<a href={inicio} class="brand">
+					<img src="/marca/tofen-app-icon-oscuro.svg" alt="" width="28" height="28" />
+					Tofen
+				</a>
+				<p class="muted">{t.pie.lema}<br />{t.pie.hecho}</p>
+			</div>
 
-      <div class="pie_de_pagina">
+			<div class="footer-cols">
+				<div>
+					<p class="foot-title">{t.pie.sitio}</p>
+					<a href={`${inicio}#contenido`} class="foot-link">{t.menu.contenido}</a>
+					<a href={`${inicio}#temas`} class="foot-link">{t.menu.temas}</a>
+					<a href={ruta(idioma, '/about')} class="foot-link">{t.menu.sobre}</a>
+				</div>
+				<div>
+					<p class="foot-title">{t.pie.redes}</p>
+					{REDES.map((r) => (
+						<a href={r.url} target="_blank" rel="noopener" class="foot-link">
+							<Icono nombre={r.red} />
+							{r.nombre}
+						</a>
+					))}
+				</div>
+			</div>
+		</div>
 
-             <h2 class="abajo_tofen">Tofen</h2>
-
-            <ul class="redes_sociales_ul">
-                  <li><a href="https://www.instagram.com/tofen_kevin/"> <img class="inst_img" src="/instagram.png" alt="instagram"></a></li>
-                  <li><a href="https://www.tiktok.com/@tofenrich"><img class="tik_img" src="/tik_tok_white.png" alt="TikTok"></a></li>
-                  <li><a href="https://www.youtube.com/channel/UC0Ilkjabp2FzuvkXwykC06A"><img class="YT_img" src=https://raw.githubusercontent.com/Tofen5061/Tofen-youtube-page/refs/heads/main/public/Youtube_icon.png alt="YouTube"></a></li>
-            </ul>
-
-
-      </div>
-
-</main>
+		<p class="foot-bottom muted">
+			© {anio} Tofen · <a href={ruta(idioma, idioma === 'en' ? '/privacy' : '/privacidad')} class="legal">{t.legal.privacidad}</a>
+		</p>
+	</div>
+</footer>
 
 <style>
+	.footer {
+		margin-top: 0;
+		border-top: 1px solid var(--border);
+		background: var(--bg-alt);
+		padding: 48px 0 24px;
+	}
 
+	.footer-in {
+		display: flex;
+		justify-content: space-between;
+		gap: 32px;
+		flex-wrap: wrap;
+	}
 
-.pie_de_pagina {
-    background-color: rgb(0, 0, 0);
-    width: 100%;
-    height: clamp(15vh, 25vh, 30vh)
-}
+	.brand {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		color: var(--text);
+		font-weight: 800;
+		font-size: 16px;
+	}
 
+	.brand:hover {
+		text-decoration: none;
+	}
 
-.redes_sociales_ul {
-      list-style: none;
-      display: flex;
-      justify-content: center;
-      justify-items: center;
-      align-items: center;
-      gap: 2vw;
-      height: auto;
+	.brand img {
+		border-radius: 7px;
+	}
 
-}
+	.footer-brand .muted {
+		margin-top: 8px;
+	}
 
-.inst_img{
-      height: 3vw
-}
+	.footer-cols {
+		display: flex;
+		gap: 56px;
+		flex-wrap: wrap;
+	}
 
-.tik_img {
-      height: 3vw;
+	.foot-title {
+		font-size: 11px;
+		font-weight: 800;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--muted);
+		margin-bottom: 10px;
+	}
 
-}
-.YT_img{
-      height: 2.5vw;
+	.foot-link {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		color: var(--text);
+		font-size: 14px;
+		font-weight: 600;
+		padding: 4px 0;
+	}
 
-}
+	.foot-link :global(svg) {
+		color: var(--muted);
+	}
 
-.abajo_tofen{
-      color: rgb(107, 107, 107);
-      text-align: center;
-      font-size: 1.4rem;
-      font-family: 'Roboto', sans-serif;
-      margin-left:2%;
-      padding-top: 5vh;
-}
+	.foot-link:hover {
+		color: var(--orange-text);
+		text-decoration: none;
+	}
 
-@media (max-width:800px){
+	.legal {
+		color: var(--muted);
+	}
 
-.redes_sociales_ul {
-      gap: 2vw;
-      margin-right: 4%;
-}
-.inst_img{
-      height: 4vh;
-}
+	.legal:hover {
+		color: var(--orange-text);
+	}
 
-.tik_img {
-      height: 4vh;
+	.foot-bottom {
+		margin-top: 32px;
+		padding-top: 20px;
+		border-top: 1px solid var(--border);
+	}
 
-}
-.YT_img{
-      height: 3vh;
-
-}
-}
-
-
-
-
-
+	@media (max-width: 640px) {
+		.footer-cols {
+			gap: 32px;
+		}
+	}
 </style>

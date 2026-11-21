@@ -1,214 +1,372 @@
 ---
-import Layout from "../layouts/Layout.astro"
-import { setupCarousel } from '../scripts/banner_carousel.js';
-import Tiktok from "../components/Tiktok.astro";   
-import Youtube from "../components/Youtube.astro";
-import Instagram from "../components/Instagram.astro";
-import { marked } from 'marked'; 
-import { string, undefined } from "astro:schema";
-const { banner_img = [], banner_alt, header, description, download_link, after_download_content } = Astro.props;
-const htmlDescription = marked(description);
-// Convertimos after_download_content también, si lo deseas
-const htmlAfterDownload = marked(after_download_content);
+import Layout from './Layout.astro';
+import Redes from '../components/Redes.astro';
+import Icono from '../components/Icono.astro';
+import Anuncio from '../components/Anuncio.astro';
+import { SUSCRIBIRSE, SITIO, REDES } from '../data/sitio';
+import { idiomaDe, ruta, textos } from '../i18n';
+import { marked } from 'marked';
+
+interface Props {
+	banner_img?: string[];
+	banner_alt: string;
+	header: string;
+	description: string;
+	download_link: string;
+	after_download_content: string;
+	etiqueta?: string;
+	// Título para Google y la pestaña (más corto y natural que el encabezado)
+	seoTitulo?: string;
+}
+
+const {
+	banner_img = [],
+	banner_alt,
+	header,
+	description,
+	download_link,
+	after_download_content,
+	etiqueta = 'Tutorial',
+	seoTitulo,
+} = Astro.props;
+
+const idioma = idiomaDe(Astro.url);
+const t = textos(idioma).articulo;
+const inicio = ruta(idioma, '/');
+
+const htmlDescription = marked.parse(description) as string;
+const htmlAfterDownload = marked.parse(after_download_content) as string;
+
+// Descripción para buscadores: primer párrafo sin formato, recortado
+const resumen = description
+	.split('\n')
+	.find((l) => l.trim().length > 0)!
+	.replace(/[*_#`>]/g, '')
+	.trim()
+	.slice(0, 155);
+
+const titulo = seoTitulo ?? header;
+const urlPagina = new URL(Astro.url.pathname.replace(/\/$/, ''), SITIO).href;
+const autor = {
+	'@type': 'Person',
+	name: 'Kevin Richtofen (Tofen)',
+	url: new URL(ruta(idioma, '/about'), SITIO).href,
+	sameAs: REDES.map((r) => r.url),
+};
+
+// Datos estructurados: artículo técnico + migas de pan
+const jsonld = [
+	{
+		'@context': 'https://schema.org',
+		'@type': 'TechArticle',
+		headline: titulo,
+		description: resumen,
+		inLanguage: idioma === 'en' ? 'en-US' : 'es-NI',
+		image: banner_img.map((src) => new URL(src, SITIO).href),
+		mainEntityOfPage: urlPagina,
+		author: autor,
+		publisher: { '@type': 'Organization', name: 'Tofen', url: SITIO, logo: { '@type': 'ImageObject', url: new URL('/apple-touch-icon.png', SITIO).href } },
+		isPartOf: { '@type': 'WebSite', name: 'Tofen', url: SITIO },
+		about: { '@type': 'Thing', name: etiqueta },
+	},
+	{
+		'@context': 'https://schema.org',
+		'@type': 'BreadcrumbList',
+		itemListElement: [
+			{ '@type': 'ListItem', position: 1, name: t.inicio, item: new URL(inicio, SITIO).href },
+			{ '@type': 'ListItem', position: 2, name: t.guias, item: new URL(`${inicio === '/' ? '' : inicio}/#contenido`, SITIO).href },
+			{ '@type': 'ListItem', position: 3, name: titulo, item: urlPagina },
+		],
+	},
+];
 ---
-<Layout title="Tofen">
-    <main class="articles_layout">
-        <div class="display">
-            <section class="main_info">
 
-                    <div id="banner_container" class="banner_info">
-                        {
-                            banner_img && banner_img.length > 0  && banner_img.map((src, index) => (
-                            <img src={src} alt={`${banner_alt} ${index + 1}` }
-                            data-index={index} 
-                            class={index === 0 ? "active" : "inactive"}/>
-                            ))
-                        
-                        } </div>
-                    <h1 class="article_title">{header}</h1>
-                    <div class="article_description" set:html={htmlDescription} />
-                    <div class="download_button_container"><a href={download_link}><button class="button_download"><span class="button-content">Download</span></button></a></div>
-                    <div class="after_download_content" set:html={htmlAfterDownload} />
-                    
+<Layout title={`${titulo} · Tofen`} description={resumen} image={banner_img[0]} tipo="article" jsonld={jsonld}>
+	<main class="wrap articulo-pagina">
+		<a href={inicio} class="volver"><Icono nombre="atras" tam={14} /> {t.volver}</a>
 
+		<div class="rejilla">
+			<article class="card articulo">
+				{banner_img.length > 0 && (
+					<div id="banner_container" class="banner">
+						{banner_img.map((src, index) => (
+							<img
+								src={src}
+								alt={`${banner_alt} ${index + 1}`}
+								data-index={index}
+								class={index === 0 ? 'active' : ''}
+							/>
+						))}
+					</div>
+				)}
 
-            </section>
-    
-            <section class="other_info">
-                <slot name="social_tiktok" class="social_media_1"> <Tiktok /> </slot>
-                <slot name="social_youtube" class="social_media_1"> <Youtube />   </slot>
-                <slot name="social_instagram" class="social_media_1"> <Instagram />  </slot>
-                
-                <!-- Ads here -->
-                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                <!-- Other info ad 1 -->
-                            <ins class="adsbygoogle"
-                                style="display:block"
-                                data-full-width-responsive="true"
-                                data-ad-client="ca-pub-6818329352848462"
-                                data-ad-slot="9512567430"
-                                data-ad-format="auto">
-                            </ins>
-                            <script is:inline>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-            </section>
-        </div>
-    
-    </main>
+				<div class="articulo-cuerpo">
+					<span class="eyebrow">{etiqueta}</span>
+					<h1 class="articulo-titulo">{header}</h1>
+
+					<div class="prosa" set:html={htmlDescription} />
+
+					<div class="descarga">
+						<div class="descarga-texto">
+							<strong>{t.descarga}</strong>
+							<small>{t.archivo}</small>
+						</div>
+						<a href={download_link} class="btn btn-primary" target="_blank" rel="noopener">
+							<Icono nombre="descargar" />
+							{t.descargar}
+						</a>
+					</div>
+
+					<div class="prosa" set:html={htmlAfterDownload} />
+				</div>
+			</article>
+
+			<aside class="lateral">
+				<div class="card bloque">
+					<span class="bloque-titulo">{t.sigueme}</span>
+					<Redes />
+				</div>
+
+				<a href={SUSCRIBIRSE} target="_blank" rel="noopener" class="card bloque aviso">
+					<span class="aviso-icono"><Icono nombre="play" tam={18} /></span>
+					<span class="aviso-texto">
+						<strong>{t.teSirvio}</strong>
+						<small>{t.proxima}</small>
+					</span>
+				</a>
+
+				<div class="lateral-anuncio">
+					<Anuncio />
+				</div>
+			</aside>
+		</div>
+	</main>
 </Layout>
 
+<style>
+	.articulo-pagina {
+		padding-top: 28px;
+		padding-bottom: 72px;
+	}
+
+	.volver {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 13px;
+		font-weight: 600;
+		color: var(--muted);
+		text-decoration: none;
+		margin-bottom: 16px;
+	}
+
+	.volver:hover {
+		color: var(--text);
+		text-decoration: none;
+	}
+
+	.rejilla {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 300px;
+		gap: 24px;
+		align-items: start;
+	}
+
+	.articulo {
+		overflow: hidden;
+	}
+
+	/* Carrusel del banner */
+	.banner {
+		position: relative;
+		aspect-ratio: 16 / 9;
+		background: var(--bg-alt);
+		border-bottom: 1px solid var(--border);
+		overflow: hidden;
+	}
+
+	.banner img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		opacity: 0;
+		transition: opacity 600ms ease;
+	}
+
+	.banner img.active {
+		opacity: 1;
+	}
+
+	.articulo-cuerpo {
+		padding: 28px 32px 36px;
+	}
+
+	.articulo-titulo {
+		font-size: clamp(24px, 3vw, 32px);
+		font-weight: 800;
+		margin: 6px 0 20px;
+	}
+
+	.descarga {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		margin: 28px 0;
+		padding: 16px 20px;
+		border: 1px solid var(--peach-border);
+		background: var(--peach);
+		border-radius: var(--r-card);
+	}
+
+	.descarga-texto {
+		display: flex;
+		flex-direction: column;
+		line-height: 1.35;
+	}
+
+	.descarga-texto strong {
+		font-size: 14px;
+		font-weight: 800;
+	}
+
+	.descarga-texto small {
+		font-size: 12px;
+		color: var(--muted);
+	}
+
+	.lateral {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		position: sticky;
+		top: 84px;
+	}
+
+	.bloque {
+		padding: 16px 20px;
+	}
+
+	.bloque-titulo {
+		display: block;
+		font-size: 11px;
+		font-weight: 800;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--muted);
+		margin-bottom: 6px;
+	}
+
+	.aviso {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		color: var(--text);
+		text-decoration: none;
+		transition: border-color 150ms;
+	}
+
+	.aviso:hover {
+		border-color: var(--peach-border);
+	}
+
+	.aviso-icono {
+		display: grid;
+		place-items: center;
+		width: 36px;
+		height: 36px;
+		border-radius: 10px;
+		background: var(--peach);
+		color: var(--orange-text);
+		flex: none;
+	}
+
+	.aviso-texto {
+		display: flex;
+		flex-direction: column;
+		line-height: 1.35;
+	}
+
+	.aviso-texto strong {
+		font-size: 13px;
+	}
+
+	.aviso-texto small {
+		font-size: 12px;
+		color: var(--muted);
+	}
+
+	@media (max-width: 900px) {
+		.rejilla {
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.lateral {
+			position: static;
+		}
+	}
+
+	@media (max-width: 560px) {
+		.articulo-cuerpo {
+			padding: 20px 18px 28px;
+		}
+		.descarga {
+			flex-direction: column;
+			align-items: stretch;
+		}
+	}
+</style>
+
+<!-- Estilos del texto que viene de Markdown (se generan fuera del componente) -->
 <style is:global>
+	.prosa {
+		font-size: 15px;
+		line-height: 1.75;
+		color: var(--text);
+	}
 
-.display{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4vw;
-    min-height: 100vh;
-    width: 100%;
-    margin-top: 20px;
-    justify-self: center;
-    justify-content: center;
-}
+	.prosa > * + * {
+		margin-top: 14px;
+	}
 
-section{
-    background-color: #fffaf7;
-    height: 100%;
-    border-radius: 8px;
-}
+	.prosa h2 {
+		font-size: 17px;
+		font-weight: 800;
+		margin-top: 32px;
+	}
 
-.main_info{
-    min-height: 90vh;
-    width: 65vw;
-    padding-top: 20px;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-bottom: 20px;
-}
+	.prosa h3 {
+		font-size: 15px;
+		font-weight: 800;
+		margin-top: 24px;
+	}
 
-/* arreglar el tamaño de la imagen del banner */
-#banner_container {
-    position: relative;
-    height: auto; 
-    aspect-ratio: 16 / 9;
-    max-width: 95%;
-    border-radius: 8px;
-    overflow: hidden;
-}
+	.prosa strong {
+		font-weight: 800;
+	}
 
-.banner_info img{
-    position: absolute;
-    width: 100%;
-    height: auto;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-}
-.banner_info img.active{
-    width: 100%;
-    opacity: 1;
-}   
+	.prosa ul,
+	.prosa ol {
+		padding-left: 22px;
+	}
 
+	.prosa li + li {
+		margin-top: 6px;
+	}
 
-.article_title{
-    margin-top: 20px;
-    margin-bottom: 10px;
-    font-size: clamp(2rem, 3vw, 4rem);
-}
+	.prosa li::marker {
+		color: var(--orange-text);
+		font-weight: 700;
+	}
 
-.article_description p,.article_description h1,.article_description h2,.article_description li {
-    font-size: clamp(5vw 15rem 12vw); /* Intenta con un tamaño que sea claramente diferente, como 20px */
-    line-height: 1.6;}
-
-.download_button_container{
-    margin-top: 20px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
-}
-
-.button_download {
-  position: relative;
-  overflow: hidden;
-  font-weight: bold;
-  height: 3rem;
-  padding: 0 2rem;
-  border-radius: 1.5rem;
-  background: #704a11;
-  background-size: 400%;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-.button_download:hover::before {
-  transform: scaleX(1);
-}
-
-.button-content {
-  position: relative;
-  z-index: 1;
-}
-
-.button_download::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: scaleX(0);
-  transform-origin: 0 50%;
-  width: 100%;
-  height: inherit;
-  border-radius: inherit;
-  background: linear-gradient(
-    82.3deg,
-    #FFC719,
-    #BF033B
-  );
-  transition: all 0.475s;
-}
-
-.after_download_content{
-    font-size: clamp(1rem, 1.5vw, 2rem);
-    margin-top: 60px;
-}
-
-.other_info{
-    min-height: 90vh;
-    width: 20vw;
-    padding-top: 15px;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 5vh;
-}
-
-.social_media_1{
-    width: 100%;
-}
-
-
-
-@media (max-width: 800px){
-    .main_info{
-        width: 90vw;
-
-    }
-    .other_info{
-        width: 70%;
-        justify-content: start;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        gap: 5vh;
-    }
-
-
-}
-
-
+	.prosa a {
+		color: var(--orange-text);
+		font-weight: 700;
+	}
 </style>
 
 <script>
-    import { setupCarousel } from '../scripts/banner_carousel.js';
-setupCarousel()
+	import { setupCarousel } from '../scripts/banner_carousel.js';
+	setupCarousel();
 </script>
